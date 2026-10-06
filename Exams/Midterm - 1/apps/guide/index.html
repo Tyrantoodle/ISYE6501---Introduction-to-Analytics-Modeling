@@ -1,0 +1,382 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study guide · ISYE 6501 MT1</title><link rel="stylesheet" href="../shared/styles.css"></head><body><main><nav aria-label="Study apps"><a href="../index.html">Study home</a><a href="../guide/index.html">Guide</a><a href="../quizzes/index.html">Quizzes</a><a href="../flashcards/index.html">Flashcards</a><a href="../resources/index.html">Resources</a></nav><header><p class="eyebrow">ISYE 6501 · tyrantoodle · MIDTERM 1 · MODULES 1–10</p><h1>Study guide</h1></header><div id="reader-tools" class="reader-tools" hidden><div class="toolbar"><label for="search">Search sections</label><input id="search" type="search" placeholder="Try SVM, leakage, or PCA"><label for="contents">Jump to</label><select id="contents" class="doc-nav"></select><button id="clear" type="button">Clear search</button></div><p id="status" role="status" aria-live="polite"></p></div><p id="error" class="error" role="alert" hidden></p><div id="sections" class="sections"><article id="section-0" tabindex="-1" data-title="Comprehensive Midterm 1 Study Guide — Modules 1–10"><h1>Comprehensive Midterm 1 Study Guide — Modules 1–10</h1>
+</article><article id="section-1" tabindex="-1" data-title="Scope and reading record"><h2>Scope and reading record</h2>
+<p>All 54 <code>.txt</code> transcripts in the <code>Transcripts</code> folders of Modules 1–10 were read, including introductory, course-structure, grading, and homework wrap-up lessons. This reference follows those lectures. It does not claim that these modules define the official exam scope. Equations below use consistent notation because spoken transcripts sometimes misrender symbols. Details labeled <strong>clarification</strong> or <strong>supplement</strong> make the mathematics precise or extend the lecture&#x27;s brief treatment; they are not additional lecture coverage.</p>
+<div class="table-wrap"><table><thead><tr><th>Module</th><th>Transcripts</th><th>Main content</th></tr></thead><tbody>
+<tr><td>1</td><td>4</td><td>Analytics, course structure, homework, meanings of “model”</td></tr>
+<tr><td>2</td><td>8</td><td>Classification, SVM, k-NN, data terminology, scaling</td></tr>
+<tr><td>3</td><td>4</td><td>Validation, splitting data, cross-validation</td></tr>
+<tr><td>4</td><td>6</td><td>Clustering, distance norms, k-means, cluster prediction</td></tr>
+<tr><td>5</td><td>3</td><td>Data preparation, finding and handling outliers</td></tr>
+<tr><td>6</td><td>3</td><td>Change detection, CUSUM, honest interpretation</td></tr>
+<tr><td>7</td><td>6</td><td>Exponential smoothing, forecasting, ARIMA, GARCH</td></tr>
+<tr><td>8</td><td>6</td><td>Regression, likelihood, information criteria, interpretation</td></tr>
+<tr><td>9</td><td>6</td><td>Box–Cox, detrending, PCA, eigenvalues/eigenvectors</td></tr>
+<tr><td>10</td><td>8</td><td>Trees, forests, logistic regression, evaluation, advanced regression</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>54</strong></td><td>Includes lessons 1L2a and 10L3a</td></tr>
+</tbody></table></div>
+</article><article id="section-2" tabindex="-1" data-title="Model comparison cheat sheet"><h2>Model comparison cheat sheet</h2>
+<p>Distinguish <strong>parameters learned from data</strong> (coefficients, centers, loadings) from <strong>settings chosen or tuned</strong> (number of neighbors, clusters, lags, thresholds). Lectures sometimes call both “parameters.”</p>
+<div class="table-wrap"><table><thead><tr><th>Method; module</th><th>What it does / output</th><th>Data it uses</th><th>Settings to choose or tune</th><th>How it works; defining detail</th></tr></thead><tbody>
+<tr><td>Hard-margin linear SVM; 2</td><td>Assigns one of two classes</td><td>Numeric/encoded features and known labels, conventionally −1/+1; linearly separable training set</td><td>Feature representation, scaling; optional decision-boundary shift</td><td>Learns a separating hyperplane maximizing the margin; nearest boundary points determine support</td></tr>
+<tr><td>Soft-margin / kernel SVM; 2</td><td>Classification with overlap or nonlinear boundaries</td><td>Labeled features; scale-sensitive</td><td>Margin/error tradeoff λ or C; class penalties; kernel and its settings</td><td>Trades margin width against hinge loss; kernel extensions permit nonlinear separation</td></tr>
+<tr><td>k-NN classification; 2</td><td>Predicts a class, including multiple classes</td><td>Labeled data with meaningful distances</td><td>k, distance norm, feature weights / selection, tie rule</td><td>Uses the most common label among k closest training points</td></tr>
+<tr><td>k-means; 4</td><td>Discovers groups, centers, and memberships</td><td>Unlabeled quantitative features with meaningful means; scale-sensitive</td><td>k, initial centers, repeated starts</td><td>Alternates nearest-center assignments and centroid updates; fast heuristic, no global-optimum guarantee</td></tr>
+<tr><td>CUSUM; 6</td><td>Signals an increase/decrease in process mean</td><td>Ordered observations with a baseline expectation μ</td><td>Allowance C, alarm threshold T, baseline, monitored direction</td><td>Accumulates deviations; resets evidence in the irrelevant direction; balances false alarms against delay</td></tr>
+<tr><td>Single exponential smoothing; 7</td><td>Smooths baseline and forecasts level</td><td>Ordered numeric observations; level-only formulation</td><td>α ∈ [0,1], initial level</td><td>Weighted blend of latest observation and previous level; older observations retain exponentially decreasing weight</td></tr>
+<tr><td>Holt / double smoothing; 7</td><td>Smooths and forecasts level plus trend</td><td>Numeric time series with evolving trend</td><td>α, β, initial level/trend</td><td>Updates level and trend separately; forecast extends current trend</td></tr>
+<tr><td>Holt–Winters / triple smoothing; 7</td><td>Forecasts level, trend, and repeating seasonal effect</td><td>Time series with a known cycle length; multiplicative version needs suitable positive/nonzero levels</td><td>α, β, γ, cycle length L, additive vs multiplicative seasonality, initialization</td><td>Updates all three components; uses the last estimate for the same seasonal position</td></tr>
+<tr><td>ARIMA(p,d,q); 7</td><td>Models / forecasts series values</td><td>Ordered numeric series; differenced series should be adequately stationary</td><td>p = AR lags; d = differencing order; q = error lags; possible seasonality</td><td>Models differenced observations using their own lagged values and lagged innovations</td></tr>
+<tr><td>GARCH; 7</td><td>Models / forecasts conditional variance</td><td>Time series with changing volatility; innovations from a mean model</td><td>Orders for lagged variance and squared innovations; distribution assumptions</td><td>Current variance depends on previous variances and squared shocks; no differencing parameter d</td></tr>
+<tr><td>Linear regression; 8</td><td>Describes associations or predicts numeric response</td><td>Observed response and numeric/encoded predictors</td><td>Predictor set, transformations, interactions</td><td>Learns intercept and slopes minimizing squared residuals; linear in coefficients</td></tr>
+<tr><td>Box–Cox; 9</td><td>Transforms positive response to improve modeling</td><td>Positive numeric values, often response in regression or a time series</td><td>Power λ; any justified shift must be recorded</td><td>Power family with log as λ → 0; may stabilize variance and improve functional form</td></tr>
+<tr><td>Detrending; 9</td><td>Removes systematic temporal movement</td><td>Time-indexed response and/or predictors</td><td>Trend form; fitting interval; external adjustment if available</td><td>Subtracts fitted trend or uses a known adjustment such as inflation; model remaining variation</td></tr>
+<tr><td>PCA; 9</td><td>Extracts uncorrelated components; optionally reduces dimension</td><td>Centered numeric feature matrix; response is not used</td><td>Scaling policy; number of retained components r</td><td>Projects onto orthogonal eigenvector directions ranked by predictor variance; learns loadings</td></tr>
+<tr><td>CART / tree methods; 10</td><td>Numeric predictions, classes, or probabilities by region</td><td>Labeled numeric or categorical features</td><td>Split criterion, minimum improvement Δ, minimum leaf size, depth, pruning</td><td>Recursive feature splits; ordinary regression leaf predicts mean, classification leaf predicts majority</td></tr>
+<tr><td>Random forest; 10</td><td>Ensemble regression/classification</td><td>Labeled features; numeric and appropriately handled categorical values</td><td>Number of trees, candidate features per split, tree-size settings</td><td>Bootstrap samples plus random feature subsets diversify trees; averages numeric predictions or votes on classes</td></tr>
+<tr><td>Logistic regression; 10</td><td>Probability of a binary outcome; optional class prediction</td><td>Features and binary 0/1 outcomes</td><td>Predictor set, transformations/interactions; threshold for classification</td><td>Logistic function maps a linear predictor to (0,1); coefficients fit by likelihood</td></tr>
+<tr><td>Poisson regression; 10</td><td>Expected count / arrival rate</td><td>Nonnegative integer outcomes and predictors</td><td>Predictor set/link; exposure adjustment when observation lengths differ</td><td>Models Poisson mean λ as a function of attributes; lecture gives conceptual introduction</td></tr>
+<tr><td>Regression splines / MARS; 10</td><td>Flexible numeric-response prediction</td><td>Labeled numeric-response data</td><td>Polynomial degree, knots, complexity</td><td>Joins polynomial pieces at knots with suitable continuity; MARS adapts basis functions to data</td></tr>
+<tr><td>Bayesian regression; 10</td><td>Posterior distributions of coefficients; predictions with uncertainty</td><td>Response/features plus prior distributions</td><td>Priors, likelihood, prior strength</td><td>Updates prior beliefs using data via Bayes&#x27; theorem; useful when informative expertise supplements limited data</td></tr>
+<tr><td>k-NN regression; 10</td><td>Predicts a numeric response</td><td>Numeric labeled responses and meaningful feature distances</td><td>k, norm, feature weights/selection</td><td>Averages responses of nearest neighbors rather than voting on classes</td></tr>
+</tbody></table></div>
+<p>Validation, norms, information criteria, and confusion matrices below are cross-cutting tools rather than stand-alone prediction models.</p>
+</article><article id="section-3" tabindex="-1" data-title="1. Foundations and terminology — Modules 1–2"><h2>1. Foundations and terminology — Modules 1–2</h2>
+<p><strong>Descriptive:</strong> what happened, what patterns exist, how factors relate. <strong>Predictive:</strong> what value/outcome is expected for new or future observations. <strong>Prescriptive:</strong> what action to take, given objectives and constraints. A forecast alone does not choose the best action; it can feed a decision model.</p>
+<p>“Model” has three levels: the method family (regression), a specification (regression using size, weight, distance), and a fitted equation with numerical coefficients. Be explicit about which level a question concerns.</p>
+<p>Rows are observations/data points. Columns are attributes/features; explanatory columns are also predictors/covariates. The response/outcome is the answer to estimate. Structured data fits a defined representation; free text is a lecture example of unstructured data requiring feature extraction.</p>
+<p>Quantitative values measure magnitude. Categorical values identify groups; a ZIP code written as a number is still categorical. Binary variables have two categories and can often be encoded 0/1. Time series have temporal ordering, frequently at equal intervals; ordering matters even if storage looks like an ordinary table.</p>
+<p>Supervised learning uses observed responses (classification and regression). Unsupervised learning uses features without known responses (clustering and PCA). Assigning a new observation to a learned cluster does not change the original clustering into supervised learning.</p>
+</article><article id="section-4" tabindex="-1" data-title="2. Classification, SVM, neighbors, and scaling — Module 2"><h2>2. Classification, SVM, neighbors, and scaling — Module 2</h2>
+<h3>Linear SVM</h3>
+<p>Let f(x) = b + Σⱼwⱼxⱼ. Classify using the sign of f(x). The separator is f(x)=0; margin boundaries are f(x)=±1.</p>
+<ul>
+<li>Labels yᵢ = ±1 allow the single constraint yᵢf(xᵢ) ≥ 1.</li>
+<li>Hard-margin optimization: minimize ||w||² subject to those constraints.</li>
+<li>Margin width is 2/||w||. Smaller coefficient norm means larger margin under this normalization.</li>
+<li>A straight line in two features becomes a hyperplane in higher dimensions.</li>
+<li>Support vectors touch margin boundaries in the separable illustration; the classifier itself lies between boundaries.</li>
+</ul>
+<p>For overlapping classes use hinge loss ℓᵢ = max(0, 1 − yᵢf(xᵢ)). A consistent lecture-style objective is Σᵢℓᵢ + λ||w||². Larger λ emphasizes margin / regularization; smaller λ emphasizes fitting training observations. Many packages instead use (1/2)||w||² + CΣᵢℓᵢ: larger software C emphasizes fitting. <strong>Do not infer direction from the symbol alone: inspect its location in the objective.</strong> Software C is unrelated to CUSUM&#x27;s C.</p>
+<p><strong>Clarification:</strong> hinge loss penalizes both misclassification and correct classification inside the margin. If yᵢf(xᵢ)=0.5, the class sign is correct but loss is 0.5. If it equals −0.5, the prediction is wrong and loss is 1.5. If it equals 1.5, loss is zero. It is not simply a count of classification errors.</p>
+<p>Different error costs can be reflected by different loss multipliers or by moving the boundary. Move a boundary to protect against the more costly error; this may deliberately increase the cheaper error. No general rule says the symmetric midpoint maximizes real-world value.</p>
+<p>Kernel SVM permits nonlinear boundaries; kernel mathematics is outside the lecture scope. Once features are on comparable scales, near-zero linear coefficients can suggest weak contributions, but correlated variables and model context complicate interpreting them as universally irrelevant.</p>
+<h3>k-NN</h3>
+<p>For a new observation: compute distances, find k nearest labeled training observations, predict their most frequent class. Multi-class classification follows the same rule; a plurality need not exceed 50%.</p>
+<p>Choose k by validation. Feature weights can give important dimensions more influence; removing irrelevant dimensions can improve neighborhoods. <strong>Supplement:</strong> small k is sensitive to local noise, while large k smooths local distinctions. Odd k avoids a binary vote tie under simple voting, but does not resolve every multi-class or equal-distance tie. A tie policy is still needed.</p>
+<h3>Scaling / standardization</h3>
+<p>Min–max scaling: uᵢⱼ = (xᵢⱼ − minⱼ)/(maxⱼ − minⱼ). To map minimum to a and maximum to b, use a + (b−a)uᵢⱼ. Standardization: zᵢⱼ = (xᵢⱼ − μⱼ)/σⱼ.</p>
+<p>Scale affects SVM penalties and neighbor/cluster distances. A numerically large feature should not dominate merely because of its units. Centering/scaling also affects which PCA directions explain most variance.</p>
+<p><strong>Clarifications:</strong> standardization gives mean zero and standard deviation one, not a normally shaped distribution. Min–max bounds apply to the fitted data range; a future point outside that range can transform outside [0,1]. Constant columns need special handling because their range or standard deviation is zero. Fit preprocessing on training data and reuse it on validation/test/new observations. Trees generally do not require scaling because order-based thresholds are preserved by monotone rescaling.</p>
+</article><article id="section-5" tabindex="-1" data-title="3. Validation and data splitting — Module 3"><h2>3. Validation and data splitting — Module 3</h2>
+<p>Training performance is optimistic because fitting captures both real structure and dataset-specific random patterns. A more flexible model can fit more random patterns; excellent training fit is not enough.</p>
+<div class="table-wrap"><table><thead><tr><th>Data role</th><th>Use</th><th>Why another set may be needed</th></tr></thead><tbody>
+<tr><td>Training</td><td>Fit model coefficients, centers, etc.</td><td>Training score benefits from fitting its own noise</td></tr>
+<tr><td>Validation</td><td>Select method/settings among candidates</td><td>Winning candidate can benefit from validation-set luck</td></tr>
+<tr><td>Test</td><td>Estimate performance after selection</td><td>Must remain independent of fitting and selection</td></tr>
+</tbody></table></div>
+<p>For a single predetermined model, a train/test split can suffice. Comparing models or tuning k, λ, p/d/q, features, or thresholds is model selection and requires validation or cross-validation before final testing.</p>
+<p>Lecture examples: 70/30 to 90/10 train/test; 50/25/25, 60/20/20, or 70/15/15 train/validation/test. These are examples, not universal requirements. Enough representative observations in each set matters more than a particular ratio.</p>
+<p>Random splitting can accidentally underrepresent periods or subgroups. Rotation gives systematic coverage but can synchronize with a cycle: assigning every fifth point to the same set can segregate weekdays. Stratification within meaningful groups is a possible remedy.</p>
+<p><strong>k-fold CV:</strong> reserve test data; partition the remaining observations into k folds. Fit on k−1 folds, validate on the other fold, repeat k times, and average validation results for each candidate specification. Every observation is used for validation once and training k−1 times. The lecture notes 10 folds are common. Select the specification, then refit using all non-test observations and evaluate once on the test set. Do not choose one fold&#x27;s fitted model or average fold coefficients as the default final model.</p>
+<p><strong>Supplement for forecasting:</strong> validation must reproduce the deployment timeline. Use past observations to predict later observations, with chronological holdouts or rolling/expanding windows. Random or rotating splits can leak future information when forecasting. Likewise, repeated observations from the same entity may need grouped splitting. Refit preprocessing inside each CV training fold.</p>
+</article><article id="section-6" tabindex="-1" data-title="4. Distance and clustering — Module 4"><h2>4. Distance and clustering — Module 4</h2>
+<p>Minkowski distance dₚ(x,z) = (Σⱼ|xⱼ−zⱼ|ᵖ)^(1/p), with p ≥ 1 for a norm.</p>
+<div class="table-wrap"><table><thead><tr><th>Norm</th><th>Formula</th><th>Interpretation/example</th></tr></thead><tbody>
+<tr><td>L1 / Manhattan</td><td>Σⱼ</td><td>xⱼ−zⱼ</td><td></td><td>Grid travel or sequential movements: add required times</td></tr>
+<tr><td>L2 / Euclidean</td><td>sqrt(Σⱼ(xⱼ−zⱼ)²)</td><td>Straight-line distance</td></tr>
+<tr><td>L∞</td><td>maxⱼ</td><td>xⱼ−zⱼ</td><td></td><td>Simultaneous independent movements: the slowest determines completion</td></tr>
+</tbody></table></div>
+<p>For coordinate differences 3 and 4, distances are 7, 5, and 4 respectively. Changing the metric or weights can change neighbors and groups.</p>
+<h3>k-means</h3>
+<ul>
+<li>Choose k and initial centers.</li>
+<li>Assign every observation to its closest center.</li>
+<li>Recalculate each center as the mean of its assigned observations.</li>
+<li>Repeat until assignments stop changing (or the implementation&#x27;s stopping criterion is met).</li>
+</ul>
+<p>For standard Euclidean k-means, the objective is within-cluster <strong>sum of squared distances</strong>: WSS = ΣₖΣᵢ∈cluster k ||xᵢ−cₖ||². The arithmetic mean minimizes this objective. The lecture verbally describes total “distance”; distinguish that shorthand from an unsquared-distance objective, whose optimal center generally differs.</p>
+<p>The method is a heuristic: different initial centers can produce different local solutions. Run multiple starts and compare objective values at the same k. The lecturer describes its alternating steps as an EM-style approach; this does not make it a general probabilistic mixture model.</p>
+<p>Increasing k cannot worsen the globally optimal WSS; k equal to the number of distinct observations can give zero WSS. Therefore do not select k merely by taking the smallest raw WSS. Use an elbow (where improvement slows) together with operational needs, such as the budget for four facilities. Individual heuristic runs can look non-monotonic because they stop at different local solutions.</p>
+<p>An outlier is still assigned to the nearest center and can pull its mean. Investigate its meaning; automatic removal may discard an important segment. <strong>Supplement:</strong> standard k-means is best suited to compact Euclidean groups and can struggle with elongated/nonconvex clusters or strongly unequal sizes/densities.</p>
+<p>For a new point, keep the learned centers and assign the nearest one. The regions of all points closest to each center form a Voronoi partition. Assigning a very distant new point does not establish that it is substantively similar enough to the cluster.</p>
+<p>Three different k&#x27;s: k-NN counts neighbors; k-means counts clusters; k-fold CV counts folds. Their meanings and tuning consequences differ.</p>
+</article><article id="section-7" tabindex="-1" data-title="5. Data preparation and outliers — Module 5"><h2>5. Data preparation and outliers — Module 5</h2>
+<div class="table-wrap"><table><thead><tr><th>Type</th><th>What is unusual</th><th>Lecture example</th></tr></thead><tbody>
+<tr><td>Point</td><td>Individual value far from the rest</td><td>Isolated extreme observation</td></tr>
+<tr><td>Contextual</td><td>Value unusual in its time/place context</td><td>Temperature plausible generally but implausible at that point in a cycle</td></tr>
+<tr><td>Collective</td><td>A sequence/group is abnormal together</td><td>Missing expected heartbeat within a segment</td></tr>
+</tbody></table></div>
+<p>Representation matters: the missing beat can become a point outlier if represented as an unusually long interval between beats.</p>
+<p>A boxplot flags candidate one-dimensional outliers. The lecture discusses choosing reasonable whisker limits such as percentiles; plotting conventions vary. <strong>Supplement:</strong> common Tukey fences use Q1−1.5 IQR and Q3+1.5 IQR, with whiskers ending at observations within those fences. Neither convention proves that flagged observations are errors.</p>
+<p>Model residuals can reveal contextual anomalies: fit an appropriate baseline, then inspect large deviations. There is no universally appropriate upfront detector for every multidimensional or contextual anomaly. A misspecified model can also create large residuals.</p>
+<p>Investigate origin: sensor failure, transmission error, contamination, transcription mistake, real rare event, or different operating regime. Correct known errors, omit unusable records, or impute if needed; these modules mention imputation but do not teach its full methods.</p>
+<p>Real tails occur naturally in large datasets. Rare delivery delays matter when transporting perishable medicine: removing them can create dangerously optimistic estimates. An alternative is a model for rare-event probability plus a separate model for ordinary delivery time. The lecture&#x27;s restaurant spike was a verified one-time publicity event, removed only after investigating its relevance to normal forecasting.</p>
+<p><strong>Clarification:</strong> about 4.55% of normal observations lie beyond ±2 standard deviations and about 0.27% beyond ±3—roughly 2,700 per million, rather than treating the lecture&#x27;s rounded “about 2,000” as an exact count.</p>
+</article><article id="section-8" tabindex="-1" data-title="6. Change detection and ethics — Module 6"><h2>6. Change detection and ethics — Module 6</h2>
+<p>CUSUM detects evidence that the process mean has shifted, distinguishing persistent small deviations from ordinary fluctuation. It is not primarily a forecasting model or a one-point anomaly detector.</p>
+<p>Upper CUSUM, initialized S₀⁺=0:</p>
+<p>Sₜ⁺ = max(0, Sₜ₋₁⁺ + xₜ − μ − C); signal when Sₜ⁺ &gt; T.</p>
+<p>An equivalent positive-valued lower CUSUM:</p>
+<p>Sₜ⁻ = max(0, Sₜ₋₁⁻ + μ − xₜ − C); signal when Sₜ⁻ &gt; T.</p>
+<p>Run both for two-sided detection. A signed negative lower statistic is another convention; keep the statistic and threshold signs consistent.</p>
+<ul>
+<li>μ is the unchanged baseline expectation.</li>
+<li>C discounts small departures: larger C reduces sensitivity.</li>
+<li>T is accumulated evidence required: larger T generally delays alarms and reduces false alarms.</li>
+<li>Resetting to zero prevents a long run of deviations in the opposite direction from hiding a later change.</li>
+<li>A single extreme observation can still trigger an alarm; CUSUM does not require every observation to exceed μ+C.</li>
+</ul>
+<p>Trade off wasted production during detection delay against unnecessary maintenance after a false alarm. The lecture&#x27;s rail-axle example favors quicker warnings because waiting for conventional statistical certainty could be too late. Tune C and T using representative data and actual error costs. A control chart plots the statistic and alarm boundary.</p>
+<p>The homework wrap-up emphasizes honest reporting. Different definitions of “summer ends,” preprocessing, settings, and interpretations can yield different answers. Report what the analysis supports rather than forcing a preferred conclusion. Later-ending summers alone cannot establish longer/hotter summers without information about when they start; the provided local dataset cannot settle a much broader question.</p>
+</article><article id="section-9" tabindex="-1" data-title="7. Time-series models — Module 7"><h2>7. Time-series models — Module 7</h2>
+<p>Use ℓₜ for level, bₜ for trend, sₜ for seasonality, and m for cycle length here to avoid collisions with CUSUM symbols.</p>
+<h3>Single smoothing</h3>
+<p>ℓₜ = αxₜ + (1−α)ℓₜ₋₁; lecture initialization ℓ₁=x₁.</p>
+<p>Smaller α smooths more and responds slowly; larger α responds quickly and follows more noise. At α=1 the estimate equals the latest observation; at α=0 the initialized level never changes. Expanding the recursion gives recent-observation weights α(1−α)ʲ and a remaining weight on the initialized level. The previous level summarizes the entire available history.</p>
+<p>Forecast at horizon h: x̂ₜ₊ₕ|ₜ=ℓₜ for all h≥1. A constant point forecast does not imply zero uncertainty; uncertainty generally increases with horizon.</p>
+<h3>Holt / trend</h3>
+<p>ℓₜ = αxₜ + (1−α)(ℓₜ₋₁+bₜ₋₁)</p>
+<p>bₜ = β(ℓₜ−ℓₜ₋₁) + (1−β)bₜ₋₁</p>
+<p>x̂ₜ₊ₕ|ₜ = ℓₜ + h bₜ.</p>
+<p>Lecture initialization: b₁=0. β controls how rapidly trend estimates change; it does not have to equal α. Multi-step forecasts accumulate h periods of trend.</p>
+<h3>Holt–Winters / multiplicative seasonality</h3>
+<p>ℓₜ = α(xₜ/sₜ₋ₘ) + (1−α)(ℓₜ₋₁+bₜ₋₁)</p>
+<p>bₜ = β(ℓₜ−ℓₜ₋₁) + (1−β)bₜ₋₁</p>
+<p>sₜ = γ(xₜ/ℓₜ) + (1−γ)sₜ₋ₘ.</p>
+<p>One-step forecast: x̂ₜ₊₁|ₜ=(ℓₜ+bₜ)sₜ₊₁₋ₘ. For general h, use (ℓₜ+h bₜ) times the most recently estimated seasonal factor for that future position in the cycle. Recycle the last full seasonal cycle beyond the first horizon cycle.</p>
+<p>m is in observation periods: daily observations with weekly seasonality → m=7; hourly observations with daily seasonality → m=24. The lecture sets initial seasonal factors to 1 and initial trend to zero; implementations may estimate better initial states from early cycles. γ controls how rapidly seasonal effects adapt.</p>
+<p>Multiplicative s=1.1 means 10% above baseline; 550 observed with s=1.1 corresponds to a deseasonalized 500. Additive seasonality instead represents a fixed unit offset. Multiplicative division is inappropriate at zero and problematic for signed series; it is most natural when seasonal amplitude scales with a positive level.</p>
+<p>Tune α, β, γ in [0,1] by minimizing training forecast squared errors, then validate forecasting performance. Compute each forecast before observing its target; a smoothed estimate using xₜ is not an honest forecast of xₜ.</p>
+<h3>ARIMA</h3>
+<p>For zₜ = Δᵈxₜ, a conventional representation is:</p>
+<p>zₜ = c + Σᵢ₌₁ᵖφᵢzₜ₋ᵢ + εₜ + Σⱼ₌₁ᵠθⱼεₜ₋ⱼ.</p>
+<p>Some software uses the opposite sign for MA coefficients. The interpretation is unchanged: p past values and q past innovations of the differenced series.</p>
+<p>Δxₜ=xₜ−xₜ₋₁. Δ²xₜ=xₜ−2xₜ₋₁+xₜ₋₂. d=2 means differences of differences, not simply xₜ−xₜ₋₂. Stationarity means stable distributional behavior; for weak stationarity, mean/variance are constant and covariance depends on lag. Differencing can remove certain trends; it does not guarantee stationarity for every series.</p>
+<div class="table-wrap"><table><thead><tr><th>Specification</th><th>Lecture connection</th></tr></thead><tbody>
+<tr><td>ARIMA(0,0,0)</td><td>White noise, allowing an appropriate mean convention</td></tr>
+<tr><td>ARIMA(0,1,0)</td><td>Random walk; drift depends on intercept convention</td></tr>
+<tr><td>ARIMA(p,0,0)</td><td>AR(p)</td></tr>
+<tr><td>ARIMA(0,0,q)</td><td>MA(q)</td></tr>
+<tr><td>ARIMA(0,1,1)</td><td>Related to simple exponential smoothing under compatible conventions/initialization</td></tr>
+</tbody></table></div>
+<p>MA here means lagged <strong>errors/innovations</strong>, not an arithmetic moving average of observations. AR uses lagged values of the same response rather than unrelated external factors. Seasonal ARIMA extensions are mentioned but not developed. Select orders, fit coefficients, compare validated performance and fit criteria. The lecture&#x27;s roughly 40-observation guideline is a rule of thumb, not a universal minimum or guarantee. Its preference for ARIMA on steadier data is likewise a heuristic.</p>
+<h3>GARCH</h3>
+<p>GARCH predicts conditional variance rather than the expected level. A useful <strong>supplemental</strong> GARCH(1,1) equation is hₜ=ω+aεₜ₋₁²+b hₜ₋₁. Previous squared shocks and previous variance influence today&#x27;s variance. Common positivity constraints are ω&gt;0 and a,b≥0; a+b&lt;1 supports a finite unconditional variance in the standard formulation.</p>
+<p>General models include multiple variance and squared-shock lags. Order labels p/q differ across conventions; state which counts each kind of lag. There is no ARIMA-style d term. A mean model and GARCH variance model can be combined. The lecture motivates variance as uncertainty and a proxy for investment volatility/risk, not as a complete definition of risk.</p>
+</article><article id="section-10" tabindex="-1" data-title="8. Regression, likelihood, and output — Module 8"><h2>8. Regression, likelihood, and output — Module 8</h2>
+<h3>Linear regression and transformations</h3>
+<p>yᵢ=β₀+Σⱼβⱼxᵢⱼ+εᵢ; fitted ŷᵢ=β̂₀+Σⱼβ̂ⱼxᵢⱼ. Least squares minimizes SSE=Σᵢ(yᵢ−ŷᵢ)². Residuals are differences in response, not perpendicular geometric distances to the fitted line. Squaring emphasizes large residuals. The objective is convex; a unique coefficient solution additionally requires identifiable predictors / full column rank.</p>
+<p>For an additive model, βⱼ is the expected response difference per unit of predictor j, holding the other included predictors fixed. The intercept is the prediction when included predictors equal zero; that point may be outside a useful observed range.</p>
+<p>Descriptive use emphasizes coefficient meaning; predictive use emphasizes out-of-sample predictions. Associations and good predictions do not establish causes. A third factor may cause both apparent predictor and response. Consider time order, plausible mechanisms, and confounding; randomized controlled comparisons can strengthen causal reasoning.</p>
+<p>Adding x², log(x), or x₁x₂ as columns still permits regression linear in coefficients. An interaction means the effect of one predictor depends on another: in y=β₀+β₁x₁+β₂x₂+β₃x₁x₂, the effect of x₁ is β₁+β₃x₂. Thus β₁ alone is the effect at x₂=0. A 0/1 indicator represents a difference relative to a reference category. Transforming the response changes the scale of interpretation and requires appropriate back-transformation for predictions.</p>
+<h3>Likelihood and information criteria</h3>
+<p>Likelihood evaluates observed data as a function of model parameters: L(θ)=p(data | θ), using densities for continuous observations. It is not p(θ | data). Under independent, identically distributed normal errors with common variance, maximizing likelihood for regression coefficients is equivalent to minimizing SSE.</p>
+<p>Let ℓ*=log L* and K denote the number of estimated parameters:</p>
+<ul>
+<li>AIC = −2ℓ* + 2K.</li>
+<li>AICc = AIC + 2K(K+1)/(n−K−1), requiring n&gt;K+1.</li>
+<li>BIC = −2ℓ* + K log(n).</li>
+</ul>
+<p>Lower values are preferred on comparable data and likelihood definitions. Higher likelihood alone rewards extra flexibility; the penalty discourages fitting noise. BIC has a larger per-parameter penalty than AIC when log(n)&gt;2. AICc adds a finite-sample correction and approaches AIC as n grows for fixed K.</p>
+<p>The lecture counts regression coefficients as m+1. <strong>Clarification:</strong> when estimating residual variance through likelihood, software may also count that parameter; use consistent definitions. Comparisons involving transformed responses require care about likelihood scale/Jacobian and are not automatically comparable as raw software numbers.</p>
+<p>AIC relative support for model i versus the lowest-AIC candidate is exp(−ΔAICᵢ/2). A difference of 5 gives exp(−2.5)≈0.082. The transcript&#x27;s exponent wording is corrupted; the worked example identifies the intended half-difference formula. Relative support is not a guarantee of truth. Lecture BIC heuristics: differences 0–2 slight, 2–6 moderate, 6–10 stronger, ≥10 very strong preference for the lower score. These criteria do not replace held-out performance checks.</p>
+<h3>Regression output</h3>
+<ul>
+<li>Coefficient and standard error describe estimated magnitude and uncertainty.</li>
+<li>t-statistic for a zero null: estimate / standard error.</li>
+<li>Confidence interval shows uncertainty; exclusion of zero corresponds to a two-sided significance test at the matching level under matching assumptions.</li>
+<li>R²=1−SSE/SST, with SST=Σᵢ(yᵢ−ȳ)², in ordinary intercept-based regression.</li>
+<li>Adjusted R²=1−[SSE/(n−m−1)]/[SST/(n−1)], for m predictors excluding intercept.</li>
+</ul>
+<p>Adding predictors cannot decrease ordinary training R² in a nested least-squares model. Adjusted R² can decrease. Neither metric proves good future prediction; test R² can be negative. An R² of 0.59 describes 59% of sample response variation accounted for relative to the mean baseline, not 59% correct classifications or 59% causal explanation. Context matters: noisy behavioral systems can have useful models with moderate R².</p>
+<p><strong>Important correction to the transcript:</strong> a p-value is the probability, assuming the null hypothesis and model assumptions, of a test statistic at least as extreme as observed. It is not the probability that a coefficient is zero. A p-value of .02 does not mean a 2% probability that this predictor is irrelevant. Nor do 100 such observed p-values imply exactly two irrelevant predictors. Multiple testing raises false-positive concerns, but that particular reasoning is invalid. Statistical significance also does not measure practical effect size. <a href="https://doi.org/10.1080/00031305.2016.1154108">ASA statement</a>.</p>
+<p>The lecture suggests .05 as a common selection threshold; treat it as a heuristic rather than automatic deletion. Higher thresholds retain more variables; lower thresholds can miss useful ones. Very large samples can reveal tiny effects, but do not automatically make unrelated predictors significant. Domain relevance, coefficient magnitude, uncertainty, correlated predictors, and validation all matter.</p>
+</article><article id="section-11" tabindex="-1" data-title="9. Box–Cox, detrending, and PCA — Module 9"><h2>9. Box–Cox, detrending, and PCA — Module 9</h2>
+<h3>Box–Cox</h3>
+<p>For y&gt;0: gλ(y)=(y^λ−1)/λ if λ≠0; g₀(y)=log(y). λ=1 is y−1; λ=0.5 gives a shifted/scaled square-root transformation. It is a power family, not always logarithmic. Choose λ through an appropriate likelihood or diagnostic criterion. Check model residual behavior and functional form after transforming; do not assume the method always fixes the problem. <a href="https://www.itl.nist.gov/div898/handbook/pmc/section5/pmc52.htm">NIST definition</a>.</p>
+<p>The lecture motivates the method through skewness and unequal variability. <strong>Clarification:</strong> ordinary regression&#x27;s normality assumption for classical inference concerns errors conditional on predictors, not a requirement that raw response values have a normal histogram. Heteroscedasticity means conditional error variance changes; skewness of a raw histogram alone does not establish it. Heteroscedasticity does not by itself bias OLS coefficients under exogeneity, though conventional standard errors and efficiency can suffer. Transformation may improve fit and variance behavior; inspect residual diagnostics. <a href="https://www.itl.nist.gov/div898/handbook/pmd/section6/pmd624.htm">NIST transformation example</a>.</p>
+<h3>Detrending</h3>
+<p>Fit a trend g(t), then define residual series rₜ=xₜ−ĝ(t). A common fit is intercept plus linear time; more appropriate nonlinear forms are possible. Known inflation adjustments can be better than assuming a constant linear trend. Consider predictors as well as responses when time trends distort a factor-based relationship.</p>
+<p>Detrending subtracts a fitted systematic component; differencing compares consecutive values. They are distinct operations. Removing a trend need not remove seasonality or produce stationarity. <strong>Supplement:</strong> fit the trend using the allowed training interval; to recover predictions on the original response scale, add back the estimated future trend (or reverse the particular adjustment used).</p>
+<h3>PCA</h3>
+<p>Start with centered X, optionally standardized according to feature scales. Find orthonormal eigenvectors vₖ of XᵀX, ordered by descending eigenvalue λₖ. Let V contain them as columns; component scores are T=XV. Score tᵢₖ=Σⱼxᵢⱼvⱼₖ. Retain the first r columns for dimension reduction.</p>
+<p>An eigenvector is a nonzero vector satisfying Av=λv; eigenvalues satisfy det(A−λI)=0. Eigenvectors of this symmetric matrix can be chosen orthogonal. Negative eigenvalues in general matrices can reverse a vector&#x27;s direction; XᵀX specifically has nonnegative eigenvalues. Component variance is proportional to its eigenvalue; explained predictor-variance fraction is λₖ/Σⱼλⱼ.</p>
+<ul>
+<li>Keeping every component changes coordinates without discarding information; reducing components loses information.</li>
+<li>Components are uncorrelated in the fitted sample; uncorrelated is not generally independent.</li>
+<li>PCA uses only X, not y. High predictor variance does not guarantee response relevance.</li>
+<li>A low-variance direction can perfectly separate classes while a high-variance one cannot; Module 9&#x27;s contrasting examples make this explicit.</li>
+<li>Comparable random-noise levels can make large-variance components have better signal-to-noise ratios, but this is conditional intuition, not a guarantee.</li>
+<li>Feature extraction creates combinations; feature selection retains original variables.</li>
+</ul>
+<p>For regression on components, ŷ=b₀+Tb and implied coefficients in centered/scaled coordinates are a=Vᵣb. If xⱼ was standardized using μⱼ,σⱼ, then original-unit slopes are aⱼ/σⱼ and original intercept is b₀−Σⱼaⱼμⱼ/σⱼ. Merely multiplying loadings and coefficients without reversing preprocessing misses this adjustment. Use training means/scales/loadings for new observations; do not recompute a new PCA independently for test data.</p>
+<p>Kernel PCA is mentioned as a nonlinear extension; the simple linear back-transformation formula is for ordinary linear PCA.</p>
+</article><article id="section-12" tabindex="-1" data-title="10. Trees, forests, logistic regression, and evaluation — Module 10"><h2>10. Trees, forests, logistic regression, and evaluation — Module 10</h2>
+<h3>CART and pruning</h3>
+<p>Trees recursively split features into regions. A path identifies which leaf predicts a new observation. Ordinary regression trees use the leaf&#x27;s training response mean. Classification trees use its majority class; a binary-event probability can be estimated by its response fraction. The lecture also describes richer model trees with separate regressions in leaves; these are distinct from ordinary constant-leaf CART.</p>
+<p>The lecture&#x27;s illustrative growing method chooses single-feature splits that sufficiently reduce response variability, subject to a minimum improvement Δ and adequate child sample sizes. <strong>Clarification:</strong> for squared-error regression, compare child SSE or appropriately size-weighted variances; simply adding two unweighted variances need not reflect the total fit improvement.</p>
+<p>The example grows on half the available fitting data and prunes using the other half, removing splits that do not improve evaluation error. That pruning subset has a validation role; a final test set remains separate. The 5%-of-data leaf-size guideline is a lecture heuristic, not a defining CART requirement. Depth, minimum leaf size, improvement thresholds, and pruning constrain overfitting. Splitting down to one observation per leaf may memorize training data.</p>
+<p>Trees capture threshold effects, nonlinear patterns, and interactions through different paths. A small tree can be easy to explain; many complicated paths or leaf-specific regression models can be difficult. A low-quality leaf can point to a segment needing more informative predictors.</p>
+<h3>Random forests</h3>
+<p>For each tree, draw n observations <strong>with replacement</strong> from n training observations; duplicates and omitted points are expected. At each split, draw a random subset of predictor candidates and choose a useful split within it. These two sources of randomness diversify trees; a forest is not just repeated identical trees on unchanged data.</p>
+<p>Regression aggregates by averaging; classification aggregates by most common class (or averages class probabilities in implementations using that representation). Trees are generally grown without ordinary post-pruning in the lecture approach. They still have splitting/size controls. Averaging can reduce individual trees&#x27; overreaction to noise, especially when their errors are not highly correlated.</p>
+<p>The lecture mentions hundreds of trees, often 500–1,000+, and roughly 1+log(number of predictors) candidates per split. These are illustrative choices; validate settings and do not confuse number of observations with number of predictors. Variable importance summarizes contribution, not a simple signed coefficient or causal effect. Prediction can be strong while the aggregate reasoning is hard to explain. More trees do not compensate for data leakage or unsuitable data.</p>
+<h3>Logistic regression and ROC</h3>
+<p>η=β₀+Σⱼβⱼxⱼ; p=P(Y=1|x)=1/(1+exp(−η)). Observed responses are 0/1; fitted probabilities lie between 0 and 1 for finite η. As η→−∞, p→0; as η→+∞, p→1. This prevents impossible probabilities from an unconstrained linear response model.</p>
+<p><strong>Supplement:</strong> log(p/(1−p))=η. A one-unit predictor increase multiplies odds by exp(βⱼ), holding others fixed and with no relevant interaction. It does not increase probability by βⱼ points. Maximum likelihood typically uses iterative computation rather than a least-squares closed form.</p>
+<p>Transformations/interactions and tree-based variants are possible. Pseudo-R² measures differ and do not have ordinary R²&#x27;s “fraction of response variance explained” interpretation.</p>
+<p>To classify, choose positive when p≥τ. Raising τ usually decreases both true-positive and false-positive rates; lowering it increases both. Which direction is desirable depends on which outcome is labeled positive and the costs. A threshold of .5 is not inherently optimal.</p>
+<p>ROC plots sensitivity against 1−specificity across thresholds. AUC measures ranking: probability a random positive receives a higher score than a random negative, counting score ties by half in the standard convention. AUC=.5 corresponds to chance ranking; 1 is perfect ranking. AUC is not accuracy at a particular threshold, calibration of probability estimates, or expected economic value.</p>
+<h3>Confusion matrices and prevalence</h3>
+<p>Always define the positive category first; “positive” need not mean good. True/false says whether the prediction was correct; positive/negative says what the model predicted.</p>
+<div class="table-wrap"><table><thead><tr><th>Actual / predicted</th><th>Predicted positive</th><th>Predicted negative</th></tr></thead><tbody>
+<tr><td>Actual positive</td><td>TP</td><td>FN</td></tr>
+<tr><td>Actual negative</td><td>FP</td><td>TN</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Metric</th><th>Formula</th><th>Question</th></tr></thead><tbody>
+<tr><td>Sensitivity / recall / TPR</td><td>TP/(TP+FN)</td><td>Of actual positives, how many did we find?</td></tr>
+<tr><td>Specificity / TNR</td><td>TN/(TN+FP)</td><td>Of actual negatives, how many did we correctly reject?</td></tr>
+<tr><td>Precision / positive predictive value</td><td>TP/(TP+FP)</td><td>Of positive predictions, how many were correct?</td></tr>
+<tr><td>False positive rate</td><td>FP/(FP+TN)</td><td>Of actual negatives, how many were falsely positive?</td></tr>
+<tr><td>False negative rate</td><td>FN/(FN+TP)</td><td>Of actual positives, how many were missed?</td></tr>
+<tr><td>Accuracy</td><td>(TP+TN)/N</td><td>What fraction of all predictions were correct?</td></tr>
+<tr><td>Negative predictive value</td><td>TN/(TN+FN)</td><td>Of negative predictions, how many were correct?</td></tr>
+</tbody></table></div>
+<p>Check denominators; a metric may be undefined if its denominator is zero. Accuracy can conceal poor detection in an imbalanced dataset. Precision and the composition of positive predictions depend on prevalence.</p>
+<p>Lecture example labels <strong>real email as positive</strong>: TP=490, FN=10, FP=100, TN=400, with 500 actual real and 500 actual spam.</p>
+<ul>
+<li>Spam fraction in inbox = FP/(TP+FP)=100/590≈16.95%.</li>
+<li>Fraction of real mail lost = FN/(TP+FN)=10/500=2%.</li>
+<li>Sensitivity=.98, specificity=.80, accuracy=.89.</li>
+<li>Relabeling spam as positive swaps cell identities; it does not change actual filtering behavior.</li>
+</ul>
+<h3>Value / costs</h3>
+<p>Total cost = cTP·TP + cFN·FN + cFP·FP + cTN·TN. Divide by N for average cost. If correct decisions cost zero, missing a real message costs $1, and passing spam costs $.04, the example costs $14/1,000=$.014 per incoming message.</p>
+<p>If real mail prevalence is 60%, holding class-conditional performance fixed gives expected counts TP=588,FN=12,FP=80,TN=320 per 1,000; cost=$15.20 or $.0152 per message. This rescaling assumes performance within each class remains stable; arbitrary population changes may violate that assumption.</p>
+<p>More generally with positive prevalence π, sensitivity Se and specificity Sp:</p>
+<p>Expected cost = π[Se·cTP+(1−Se)·cFN]+(1−π)[(1−Sp)·cFP+Sp·cTN].</p>
+<p><strong>Supplement:</strong> with calibrated probabilities and zero cost for correct decisions, predict positive if p≥cFP/(cFP+cFN). This follows by comparing expected positive-decision cost (1−p)cFP with negative-decision cost p cFN. The lecture&#x27;s stricter spam filter has higher accuracy but worse value because missing real messages is expensive. Evaluate the objective the decision actually serves.</p>
+<h3>Advanced regression: awareness level in the lecture</h3>
+<p>Poisson regression models a nonnegative count using a conditional Poisson mean λ(x). <strong>Supplement:</strong> a common link is log λ(x)=β₀+Σⱼβⱼxⱼ; Poisson variance equals its mean conditionally. Exposure length matters for rates, and overdispersion can make a simple Poisson assumption inadequate. The lecture does not derive these details.</p>
+<p>Splines fit polynomial pieces joined at knots; degree/order and knot placement determine flexibility. Appropriate smoothness prevents arbitrary jumps at nearby predictor values. MARS stands for <strong>multivariate adaptive regression splines</strong>; the transcript&#x27;s “multi-adaptive” wording is incomplete. The lecture mentions the alternative name Earth but does not teach the implementation.</p>
+<p>Bayesian regression combines a prior distribution over coefficients/error behavior with a likelihood: posterior ∝ likelihood × prior. Its output reflects updated uncertainty. Informative expertise can help with small samples; misleading priors can also pull results in the wrong direction. Weak/broad priors leave more influence to data. Priors are distributions over unknowns, not fabricated extra observations.</p>
+<p>k-NN regression averages neighbors&#x27; numeric responses; k-NN classification votes on labels. Both depend on metric, scaling, relevant dimensions, and k. Neither requires specifying a global linear equation.</p>
+</article><article id="section-13" tabindex="-1" data-title="Final review prompts"><h2>Final review prompts</h2>
+<p>Before choosing or interpreting any model, answer:</p>
+<ul>
+<li>Is the task descriptive, predictive, or a decision requiring costs/constraints?</li>
+<li>Is the response known? Is it a class, probability, numeric amount, count, or variance?</li>
+<li>Is data ordered in time, and can the evaluation accidentally use future information?</li>
+<li>Which settings are tuned versus learned? What happens when each setting increases?</li>
+<li>Does the method depend on distance, scale, separability, stationarity, or conditional-error assumptions?</li>
+<li>What objective is optimized: hinge loss, WSS, SSE, likelihood, variance reduction, or decision cost?</li>
+<li>What would cause overfitting, and which independent data estimates final performance?</li>
+<li>Does an output describe association, predictor variance, uncertainty, ranking, or actual value?</li>
+<li>Are outliers/errors/rare regimes handled in a way that matches the intended use?</li>
+<li>Can the result be explained enough for the decision, and does the conclusion faithfully reflect the evidence?</li>
+</ul>
+<p>High-priority distinctions: margin versus classification error; λ versus software C; standardization versus normality; nearest-neighbor voting versus centroid assignment; training versus validation versus test; differencing versus detrending; AR/MA versus GARCH; additive versus multiplicative seasonality; high training R² versus future accuracy; p-value versus effect size; PCA predictor variance versus response relevance; leaf means versus leaf regressions; tree versus forest; sensitivity versus precision; AUC versus calibration; accuracy versus expected cost.</p>
+</article><article id="section-14" tabindex="-1" data-title="How to use this guide with the supplied sample quiz"><h2>How to use this guide with the supplied sample quiz</h2>
+<p>The sample illustrates style and depth, not a complete blueprint or a promise about the real exam. It emphasizes scenario-based model choice, understanding what an equation&#x27;s symbols represent, reading geometry, recognizing overfitting, and making conclusions no stronger than the data support. The five original practice quizzes cover all ten modules; their 50-question length and suggested pacing are practice choices, not claims about the real exam&#x27;s length or time limit.</p>
+<p>Your source priority should be: the Modules 1–10 lectures for taught scope; the sample quiz for style and the instructor&#x27;s illustrated reasoning; the supplied *An Introduction to Statistical Learning, second edition* for reinforcing the relevant statistical ideas. The book&#x27;s Statistical Learning, Linear Regression, Classification, Resampling Methods, Support Vector Machines, Tree-Based Methods, Dimension Reduction, and Unsupervised Learning discussions support this pack. The book is not used as a reason to add all its methods to your exam scope. Time-series smoothing, CUSUM, ARIMA, GARCH, detrending, and analytics ethics remain driven primarily by your lectures.</p>
+<p><strong>Book-supported supplements</strong> include the named bias–variance tradeoff, regression confidence versus prediction intervals, leverage versus residual outliers, collinearity, Gini/entropy, bagging/OOB interpretation, and additional SVM tuning conventions. These explain the taught concepts; advanced formulas outside the lectures are labeled and should receive lower study priority. Regularization families, boosting, deep learning, survival models, hierarchical clustering, and other book topics not taught in these modules are not added as required topics.</p>
+<h3>A repeatable way to solve scenario questions</h3>
+<ul>
+<li>Identify the response. Is it an unknown group, known class, event probability, numerical level, count, conditional variance, or evidence of a shift?</li>
+<li>Identify the available information. Are labels known? Are the observations independent or ordered? Which predictors exist before the decision?</li>
+<li>Choose the method family that answers that precise question. A probability forecast, a class decision, a detected change, and an action are different outputs.</li>
+<li>Identify settings and assumptions: units, scaling, cycle length, stationarity, similarity geometry, flexibility, and initial conditions.</li>
+<li>Evaluate on independent information. Separate fitting, selection, and final testing, including all preprocessing and thresholds.</li>
+<li>Interpret the response&#x27;s direction and scale. Higher failure probability is worse, but higher operating hours before failure is better. A positive trend&#x27;s meaning depends on the response.</li>
+<li>Check whether the answer claims causation without design support, treats fit as generalization, or treats a convenient rule of thumb as a universal law.</li>
+</ul>
+<p>For multi-select, evaluate each statement independently. A true statement can still be an incorrect answer if it does not support the conclusion requested. For example, “the tree has fewer training errors” may be factually true while failing to establish that the tree is better because its tiny leaves fit noise.</p>
+<h3>Question patterns emphasized by the sample</h3>
+<div class="table-wrap"><table><thead><tr><th>Pattern</th><th>What to inspect</th><th>Frequent trap</th></tr></thead><tbody>
+<tr><td>Classifier geometry</td><td>Which coordinate changes cross the boundary?</td><td>Confusing a vertical boundary with dependence on the vertical coordinate</td></tr>
+<tr><td>Tree comparison</td><td>Total errors, leaf sizes, and independent performance</td><td>Preferring a singleton-leaf tree solely for one fewer training mistake</td></tr>
+<tr><td>Probability versus class</td><td>Output needed and whether a threshold is added</td><td>Assuming every classifier outputs a calibrated probability</td></tr>
+<tr><td>Alarm versus forecast</td><td>Detecting a change or predicting a future level?</td><td>Calling CUSUM a generic numerical forecasting method</td></tr>
+<tr><td>Segmented operations</td><td>Do groups/time regimes require different plans?</td><td>Pooling all records because more data must always be better</td></tr>
+<tr><td>Seasonal units</td><td>What advances the observation index by one?</td><td>Choosing average calendar batch duration for an item-indexed cycle</td></tr>
+<tr><td>Trend interpretation</td><td>What exactly is increasing?</td><td>Equating “breakdown” with low reliability regardless of response definition</td></tr>
+<tr><td>PCA correlation</td><td>Standardization, eigenvalues, and response omission</td><td>Calling the first PC the best predictor simply because it explains most X variance</td></tr>
+<tr><td>Decision thresholds</td><td>Costs, feasible actions, false alarms, behavioral consequences</td><td>Treating 50% as automatically optimal or always demanding a lower threshold</td></tr>
+</tbody></table></div>
+<p>The sample uses a 5%-of-data leaf-size heuristic and mentions about ten observations per selected factor as a factor-model planning rule. Treat these as instructor guidelines for identifying obviously fragile models, not universal sample-complexity theorems. Nonlinear terms, interactions, correlated variables, noise, imbalance, dependence, and deployment differences affect the actual data needs.</p>
+</article><article id="section-15" tabindex="-1" data-title="Book-supported refinements that prevent common mistakes"><h2>Book-supported refinements that prevent common mistakes</h2>
+<h3>Bias, variance, and irreducible error</h3>
+<p>For squared-error prediction at an input, expected error can be expressed as squared bias plus estimation variance plus irreducible noise under the usual regression formulation. Bias is systematic mismatch between an average fitted prediction and the true conditional relationship; variance is how fitted predictions change across different training samples. A very restrictive model may miss curvature (high bias), while a very flexible model may follow accidental sample patterns (high variance).</p>
+<p>Training error typically decreases as model flexibility increases. Test error often initially decreases and then rises as fitting noise outweighs gains in capturing real structure. This is a useful sketch, not a requirement that every empirical validation curve form a smooth U. No method is best for every dataset.</p>
+<p><strong>Parameter direction matters:</strong> increasing k in neighbor methods generally smooths predictions; increasing polynomial degree or tree depth generally increases flexibility; increasing a norm-penalty coefficient discourages large coefficients. For SVM, the direction of a symbol called C depends on the formulation.</p>
+<h3>Three SVM tuning conventions, plus an unrelated C</h3>
+<div class="table-wrap"><table><thead><tr><th>Convention</th><th>Where the tuning setting appears</th><th>Effect of increasing it</th></tr></thead><tbody>
+<tr><td>Lecture-style lambda</td><td>Loss + lambda × squared coefficient norm</td><td>More weight on norm regularization / a wider-margin preference</td></tr>
+<tr><td>Common software C</td><td>Half squared norm + C × loss</td><td>More weight on fitting training margin violations</td></tr>
+<tr><td>Book&#x27;s violation-budget C</td><td>Sum of normalized slack variables ≤ C</td><td>Allows more total violations; relaxes the hard constraint</td></tr>
+<tr><td>CUSUM allowance C</td><td>Subtracted from each deviation increment</td><td>Makes accumulated shift evidence grow less easily</td></tr>
+</tbody></table></div>
+<p>The book&#x27;s budget C and common software&#x27;s loss-penalty C move in different directions. Always identify the exact objective or constraint. Soft classification can also be sensible even when perfect separation is technically possible if strict separation is excessively sensitive to one unusual point. In soft-margin solutions, support can include observations on or inside margins and misclassified observations; the lecture&#x27;s “boundary-touching points” picture is the simplest separable case.</p>
+<h3>Residual outliers, leverage, and influence</h3>
+<p>A regression residual outlier has an unusual response given the fitted relationship. A high-leverage observation has an unusual predictor configuration relative to the feature cloud. An influential observation materially changes a fitted model when included versus removed. These are different ideas: a high-leverage point can have a small residual if it lies near the fitted relationship, and a large-residual point with ordinary predictor values need not drastically change the slope. High leverage combined with a large residual deserves particular attention.</p>
+<p>Do not rely solely on one-variable boxplots: a combination can be unusual even when each separate feature value is ordinary. Likewise, do not interpret an extreme residual as definitive bad data. It can indicate missing structure or a genuine regime. The operational target decides whether the model should represent it.</p>
+<h3>Collinearity and conditional interpretation</h3>
+<p>Correlated predictors can carry overlapping information. A coefficient in a multiple regression describes a predictor&#x27;s contribution holding the other included predictors fixed; this can differ in sign from its coefficient in a one-predictor regression. That difference is not automatically a software error: marginal and conditional associations ask different questions.</p>
+<p>Near collinearity can increase standard errors and make individual slope estimates unstable while predictions within the familiar data region remain useful. Exact linear redundancy prevents uniquely identifying all unconstrained coefficients. PCA creates uncorrelated combinations, but omitting components can still remove outcome-relevant information. Coefficient interpretation, prediction, and response relevance must be considered separately.</p>
+<h3>Mean-response confidence versus individual prediction intervals</h3>
+<p>A confidence interval for the conditional mean reflects uncertainty in the estimated average response at a specified feature configuration. A prediction interval for a new individual response also includes that new observation&#x27;s noise, so it is generally wider at the same nominal coverage. Uncertainty can increase when extrapolating far from training data.</p>
+<p>A frequentist 95% interval procedure captures the fixed parameter in about 95% of repeated samples under its assumptions. It is not automatically a posterior 95% probability for the unknown parameter after this particular interval has been observed. Bayesian credible intervals have a different interpretation based on a posterior distribution.</p>
+<h3>Bagging, random forests, and OOB evaluation</h3>
+<p>Bagging fits models on bootstrap samples and aggregates their predictions. A random forest adds random candidate-feature subsets at splits to reduce correlated tree behavior. Using all features as candidates at every split returns the ordinary bagging comparison in the book&#x27;s tree framework.</p>
+<p>An observation is out of bag for a tree if that tree&#x27;s bootstrap sample omitted it. Its OOB prediction aggregates only trees that did not train on that observation. Across n replacement draws from n records, omission probability is (1−1/n)^n, approaching exp(−1), about 36.8%. The sample has n draws but generally fewer than n distinct records. OOB evaluation is useful, but using OOB results repeatedly for selection still motivates a separate final test for a clean evaluation of the selected procedure.</p>
+<p>The lectures mention a candidate-feature heuristic near 1+log(number of predictors), while the book illustrates roughly sqrt(number of predictors). These are tuning conventions, not competing definitions of random forests. Select an appropriate setting for the task and implementation. Also distinguish complexity in a single tree from the number of trees in an otherwise fixed forest: adding trees primarily stabilizes the ensemble average; it is not identical to adding depth.</p>
+<h3>Classification impurity</h3>
+<p>For class proportions p_k at a node, Gini impurity is sum p_k(1−p_k)=1−sum p_k squared; entropy is −sum p_k log(p_k), with the zero-probability contribution defined by its limit as zero. Both approach zero at purity. For balanced binary proportions, Gini=.5. For proportions .8,.2, Gini=.32. A classification tree ordinarily splits to reduce an appropriately size-weighted impurity.</p>
+<p>A regression tree instead reduces squared response error, and the best constant prediction is a mean. Numeric arbitrary class codes are not a universal regression target for a classification tree. These details reinforce the leaf means versus class votes distinction.</p>
+</article><article id="section-16" tabindex="-1" data-title="Worked mini-cases"><h2>Worked mini-cases</h2>
+<h3>1. Unit and outcome interpretation</h3>
+<p>A batch has 96 instruments, takes between four and six days, and each observation records the number of hours an instrument survives before its first repair. The question asks whether survival differs by sequence position in each batch. Here the observation index advances by instrument, the response is operating hours, and seasonal cycle length is 96 instruments. The average five-day duration is irrelevant to that particular index.</p>
+<p>An early-position multiplicative seasonal factor .75 represents 25% lower modeled operating hours relative to adjusted baseline. It does not mean a 25% higher failure probability, and does not prove workers caused it. A positive trend represents increasing operating hours across successive observations, which is improved modeled longevity. If the response were instead failure probability, positive trend would have a different practical implication.</p>
+<h3>2. SVM loss and margin</h3>
+<p>Take a normalized signed margin y*f=.25. The class sign is right, but loss=max(0,1−.25)=.75 because it lies inside the correct margin. At y*f=−.25, the sign is wrong and loss=1.25. At y*f=1.25, loss=0.</p>
+<p>For w=(6,8), norm(w)=10 and the full margin between f=−1 and f=1 is .2. Multiplying the coefficients without retaining the normalized boundary constraints changes the geometry interpretation; do not treat an arbitrary score scale as a margin normalization.</p>
+<h3>3. A complete validation pipeline</h3>
+<p>From 2,000 eligible independent records, reserve 400 for final testing. Use five-fold CV on 1,600: each candidate fit trains on 1,280 and validates on 320. Within each training fold, fit scaling, PCA if used, and all supervised feature selection. Compare average validation decision cost if cost is the deployment objective.</p>
+<p>Once the specification, threshold, and preprocessing policy are chosen, refit the pipeline on the 1,600 non-test records and evaluate once on the 400 test records. Do not average the fold coefficients, recompute an independent test PCA, or change the threshold after seeing test errors and still call that score untouched testing.</p>
+<h3>4. CUSUM accumulation</h3>
+<p>Upper CUSUM with mu=10, allowance C=1, threshold T=4, initial S=0 receives 12,11,8,14,13. Updates are 1,1,0,3,5. The third observation resets accumulated evidence; the last observation crosses the stated strict threshold. One observation above baseline does not automatically imply an alarm. Increasing C or T would generally make alarms more conservative.</p>
+<h3>5. A full Holt–Winters update</h3>
+<p>Use alpha=.4,beta=.2,gamma=.3, previous level=100, previous trend=2, previous same-phase seasonal factor=1.1, current observation=121.</p>
+<ul>
+<li>Deseasonalized observation=121/1.1=110.</li>
+<li>Updated level=.4*110+.6*(100+2)=105.2.</li>
+<li>Updated trend=.2*(105.2−100)+.8*2=2.64.</li>
+<li>Updated seasonal factor=.3*(121/105.2)+.7*1.1≈1.1151.</li>
+<li>If the next phase&#x27;s latest seasonal factor is .9, the one-step forecast=(105.2+2.64)*.9=97.056.</li>
+</ul>
+<p>Use the updated factor for its own phase when that phase next recurs, not automatically for the next observation. Keep parameter names separate from the estimated time-varying components.</p>
+<h3>6. PCA variance and supervised usefulness</h3>
+<p>Eigenvalues 9,2,1 give first-component predictor-variance fraction .75 and first-two fraction 11/12. These fractions measure X variation. A response can depend mostly on the last component, so 91.7% retained X variance does not promise 91.7% response accuracy.</p>
+<p>If a two-feature standardized component has loadings (.6,.8) and its response regression slope is 5, implied standardized-feature slopes are (3,4). With feature standard deviations 2 and 10, raw-unit slopes become (1.5,.4). Restoring the intercept also requires the training feature means.</p>
+<h3>7. Accuracy, prevalence, and cost</h3>
+<p>Positive is “requires maintenance.” Suppose TP=30,FN=10,FP=20,TN=140. Sensitivity=.75,specificity=.875,precision=.60,accuracy=.85. If missing a maintenance need costs $100 and unnecessary maintenance costs $5, total error cost=$1,100 across 200 cases, or $5.50 each.</p>
+<p>At a new positive prevalence .1, with those class-conditional rates assumed unchanged, expected counts per 1,000 are TP=75,FN=25,FP=112.5,TN=787.5. Expected cost is $3,062.50, or $3.0625 each. Fractional counts are expected counts, not literal possible counts for a realized batch. Precision becomes 75/187.5=.4. The same sensitivity/specificity can therefore yield a different positive-prediction reliability and a different economic outcome.</p>
+</article><article id="section-17" tabindex="-1" data-title="Diagrams you should be able to draw and read"><h2>Diagrams you should be able to draw and read</h2>
+<p>All sketches below are original instructions for simple hand drawings; they do not require reproducing textbook figures.</p>
+<div class="table-wrap"><table><thead><tr><th>Sketch</th><th>How to draw it</th><th>What to label / remember</th></tr></thead><tbody>
+<tr><td>SVM margin</td><td>Two groups; parallel lines f=−1,+1; separator halfway at f=0</td><td>Full width 2/norm(w); support points; one inside-margin correct point</td></tr>
+<tr><td>Vertical/horizontal classifier</td><td>x1 horizontal, x2 vertical; one vertical and one horizontal separator</td><td>Vertical rule depends on x1; horizontal rule depends on x2</td></tr>
+<tr><td>k-means elbow</td><td>Horizontal k, vertical WSS; steep fall then a shallow tail</td><td>Elbow is a diminishing-return guide, not an automatic best k</td></tr>
+<tr><td>Training versus validation error</td><td>Horizontal flexibility; falling training error and a roughly U-shaped held-out curve</td><td>Underfit on the left, overfit on the far right; shape is illustrative</td></tr>
+<tr><td>CUSUM control chart</td><td>Horizontal observation index; statistic beginning at zero and accumulating; horizontal T</td><td>Reset at zero; alarm only under the specified crossing rule</td></tr>
+<tr><td>PCA good/bad</td><td>An elongated diagonal point cloud; long PC1 and perpendicular short PC2</td><td>Color classes along PC1 in one sketch, across PC2 in the other; same X geometry, different useful direction</td></tr>
+<tr><td>ROC</td><td>Unit square; x=FPR,y=TPR; diagonal and curve bowing toward upper left</td><td>Random ranking AUC=.5; area/ranking is not deployment cost</td></tr>
+<tr><td>Residual diagnostics</td><td>Residual versus fitted axes; cloud, curved cloud, and funnel</td><td>No pattern, functional-form problem, and unequal variance respectively</td></tr>
+<tr><td>Tree leaf/path</td><td>Root threshold, two children, one child split again; three labeled leaves</td><td>Follow conditions literally; regression means/classification modes; leaf sample sizes</td></tr>
+<tr><td>Confusion matrix</td><td>Two-by-two cells, actual rows and predicted columns</td><td>Top row TP,FN; bottom FP,TN; denominators follow the question</td></tr>
+</tbody></table></div>
+<p>The two-sided handwritten template uses only the highest-value mini-sketches because handwriting space is limited. Practice the remaining drawings from this guide rather than trying to fit all of them onto the sheet.</p>
+</article><article id="section-18" tabindex="-1" data-title="Study sequence and readiness check"><h2>Study sequence and readiness check</h2>
+<p>Start with the model-comparison table and output distinctions. Next work through preprocessing, independent validation, and cost-sensitive evaluation. Then practice formulas for scaling, distances, SVM hinge loss, CUSUM, smoothing, ARIMA order meaning, PCA variance fractions, regression interpretation, and confusion metrics. Finish by answering scenario questions without notes and checking explanations for every missed or uncertain choice.</p>
+<p>Use a miss log with columns: question ID, topic, wrong assumption, corrected rule, and a new example. Revisit the rule rather than memorizing an answer letter. In the final pass, handwrite the two-sided template and rehearse locating each block quickly. The template is a transcription plan; your allowed exam resource is your own handwritten sheet.</p>
+<p>A strong readiness test is whether you can justify both why a correct statement answers the question and why a plausible alternative does not. In particular, distinguish “this predicts well,” “this explains X variance,” “this detects a change,” “this estimates uncertainty,” and “this action has the lowest expected cost.”</p></article></div><footer>Original practice material for studying. Quiz scores use a study convention, not official exam scoring.</footer></main><script src="../shared/reader.js"></script></body></html>

@@ -1,0 +1,22 @@
+# Publish the Pages entry and app documentation; keep course files local.
+/*
+!/.gitignore
+!/.nojekyll
+!/index.html
+!/README.md
+!/Exams/
+
+# Deliberate nesting: exam -> apps -> individual tools and shared assets.
+/Exams/*
+!/Exams/Midterm - 1/
+/Exams/Midterm - 1/*
+!/Exams/Midterm - 1/apps/
+
+# Local environments, caches, and editor files never belong in the app tree.
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+*.swp
+*.swo

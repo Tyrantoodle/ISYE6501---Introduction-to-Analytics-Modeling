@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Midterm 1 Flashcards</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+<a href="../index.html">← Study home</a>
+<header><p class="eyebrow">ISYE 6501 · MODULES 1–10</p><h1>Midterm 1 Flashcards</h1></header>
+<p id="error" role="alert" hidden></p>
+<div class="card-heading"><span id="position">Loading cards…</span><span id="module"></span></div>
+<article class="flashcard" aria-label="Flashcard">
+<section aria-labelledby="question"><p class="label">QUESTION</p><h2 id="question">Loading…</h2><div id="diagram"></div><ul id="choices" hidden></ul></section>
+<section id="answer-panel" aria-labelledby="answer-label" hidden><p id="answer-label" class="label">ANSWER</p><p id="answer"></p><p id="explanation"></p><p id="takeaway"></p><div id="links"></div></section>
+</article>
+<nav class="controls" aria-label="Flashcard controls">
+<button id="previous" type="button">← Previous</button>
+<button id="reveal" type="button" class="primary" aria-expanded="false" aria-controls="answer-panel">Reveal answer</button>
+<button id="next" type="button">Next →</button>
+</nav>
+<div class="autoplay-controls"><button id="autoplay" type="button" aria-pressed="false">▶ Auto-play</button><label for="interval">Interval</label><select id="interval"><option value="5">5 seconds</option><option value="10" selected>10 seconds</option><option value="15">15 seconds</option></select><span id="play-status" role="status" aria-live="polite">Paused</span></div>
+<p class="help">Auto-play shows the question, then the answer, each for the selected interval. It pauses when you use Previous, Next, or Reveal.</p>
+<p class="shortcuts">Keyboard: ← previous · → next · Space reveal · P play/pause</p>
+</main>
+<noscript>Enable JavaScript to use these flashcards.</noscript>
+<script>window.addEventListener('load',function(){if(!window.FLASHCARDS_READY){var e=document.getElementById('error');e.hidden=false;e.textContent='The cards could not load. Keep index.html, data.js, app.js, and styles.css together and reload.';}});</script>
+<script src="data.js"></script><script src="app.js"></script>
+</body></html>
