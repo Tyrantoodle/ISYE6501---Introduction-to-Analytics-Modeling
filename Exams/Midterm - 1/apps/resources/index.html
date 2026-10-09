@@ -1,151 +1,148 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Learning resources · ISYE 6501 MT1</title><link rel="stylesheet" href="../shared/styles.css"></head><body><main><nav aria-label="Study apps"><a href="../index.html">Study home</a><a href="../guide/index.html">Guide</a><a href="../quizzes/index.html">Quizzes</a><a href="../flashcards/index.html">Flashcards</a><a href="../resources/index.html">Resources</a></nav><header><p class="eyebrow">ISYE 6501 · tyrantoodle · MIDTERM 1 · MODULES 1–10</p><h1>Learning resources</h1></header><div id="reader-tools" class="reader-tools" hidden><div class="toolbar"><label for="search">Search sections</label><input id="search" type="search" placeholder="Try SVM, leakage, or PCA"><label for="contents">Jump to</label><select id="contents" class="doc-nav"></select><button id="clear" type="button">Clear search</button></div><p id="status" role="status" aria-live="polite"></p></div><p id="error" class="error" role="alert" hidden></p><div id="sections" class="sections"><article id="section-0" tabindex="-1" data-title="Learning Resources — Modules 1–10"><h1>Learning Resources — Modules 1–10</h1>
-<p>Use these links when a distinction remains confusing after reading the answer key. The lecture transcripts define the exam scope. External material clarifies the named concepts; full courses and documentation can include additional topics. Links were checked on October 5, 2026. Video links were verified through the author&#x27;s catalog; playback was not audited.</p>
-<p>The ISLR links below lead to the authors&#x27; companion-course catalog. Choose the named lecture topic in the R or Python course; focus on conceptual explanations rather than code. StatQuest catalog links lead to the author&#x27;s list when a direct video is not supplied. Forecasting and documentation links open topic-specific readings.</p>
-</article><article id="section-1" tabindex="-1" data-title="Suggested priority"><h2>Suggested priority</h2>
-<p>Start with validation/leakage, the two SVM penalty conventions, ARIMA versus moving averages, logistic odds versus probability, and confusion-metric denominators. Then review CUSUM settings, seasonal indexing, PCA versus predictive relevance, and regression inference. This is a study recommendation based on the distinctions in the supplied material, not an exam-weight prediction.</p>
-</article><article id="section-2" tabindex="-1" data-title="Model purpose and interpretation"><h2>Model purpose and interpretation</h2>
+<p>The lecture topics define scope. These existing reading/video links clarify named concepts; their full pages or courses can go deeper than this survey. Focus on purpose, inputs, outputs, interpretation, and the distinction discussed in the question. Links are retained from the previously checked local resource catalog; playback was not audited.</p>
+</article><article id="section-1" tabindex="-1" data-title="Model purpose and interpretation"><h2>Model purpose and interpretation</h2>
 <p>Before choosing a method, name the response, available predictors, intended decision, and deployment population. Separate explanation of past observations, prediction of future outcomes, and optimization of actions.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR author companion courses</a></li>
 </ul>
-</article><article id="section-3" tabindex="-1" data-title="Scaling, units, and distance"><h2>Scaling, units, and distance</h2>
+</article><article id="section-2" tabindex="-1" data-title="Scaling, units, and distance"><h2>Scaling, units, and distance</h2>
 <p>Work through z=(x-mean)/SD and min-max scaling. Explain why changing units changes an unscaled distance. Learn transformation parameters on training data, then reuse them. Distinguish feature standardization from making each observation a unit-length vector.</p>
 <ul>
 <li><a href="https://scikit-learn.org/stable/modules/preprocessing.html">scikit-learn preprocessing reference</a></li>
 </ul>
-</article><article id="section-4" tabindex="-1" data-title="SVM margins, hinge loss, and penalty conventions"><h2>SVM margins, hinge loss, and penalty conventions</h2>
-<p>Sketch f=0 and f=±1, label width 2/norm(w), and calculate hinge loss for margins above one, between zero and one, and below zero. Compare the placement of C and lambda in the stated objectives before predicting their effects.</p>
+</article><article id="section-3" tabindex="-1" data-title="SVM boundaries, margin, and fit tradeoffs"><h2>SVM boundaries, margin, and fit tradeoffs</h2>
+<p>Identify which features affect the fitted boundary. Distinguish hard separation from a soft-margin tradeoff, and inspect the stated penalty role. Use validation and the relevant error costs; optimization derivations are not required.</p>
 <ul>
 <li><a href="https://youtu.be/efR1C6CvhmE">StatQuest SVM video</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR classification lectures</a></li>
 </ul>
-</article><article id="section-5" tabindex="-1" data-title="Nearest neighbors and the meaning of k"><h2>Nearest neighbors and the meaning of k</h2>
+</article><article id="section-4" tabindex="-1" data-title="Nearest neighbors and the meaning of k"><h2>Nearest neighbors and the meaning of k</h2>
 <p>Compare classification voting with regression averaging. Specify k, distance, scaling, weights, and tie handling. A larger neighborhood smooths the prediction but can hide local patterns; choose settings using held-out performance.</p>
 <ul>
 <li><a href="https://statquest.org/video_index.html">StatQuest video catalog: nearest neighbors</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR statistical-learning lectures</a></li>
 </ul>
-</article><article id="section-6" tabindex="-1" data-title="Cross-validation, leakage, and selection optimism"><h2>Cross-validation, leakage, and selection optimism</h2>
+</article><article id="section-5" tabindex="-1" data-title="Cross-validation, leakage, and selection optimism"><h2>Cross-validation, leakage, and selection optimism</h2>
 <p>Draw the outer test holdout and inner CV folds. Repeat learned preprocessing inside each training fold. After selecting settings, refit on the non-test data and evaluate once on the untouched test set. Group or order observations when deployment requires it.</p>
 <ul>
 <li><a href="https://youtu.be/fSytzGwwBVw">StatQuest cross-validation video</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR resampling lectures</a></li>
 </ul>
-</article><article id="section-7" tabindex="-1" data-title="K-means, distance geometry, and elbow selection"><h2>K-means, distance geometry, and elbow selection</h2>
+</article><article id="section-6" tabindex="-1" data-title="K-means, distance geometry, and elbow selection"><h2>K-means, distance geometry, and elbow selection</h2>
 <p>Sketch assign-to-nearest-center and recompute-means steps. For standard k-means, centers minimize squared Euclidean distance within assigned groups. WSS rewards additional clusters, so minimum WSS alone cannot determine a useful k. Compare geometry to the actual travel or service objective.</p>
 <ul>
 <li><a href="https://youtu.be/4b5d3muPQmA">StatQuest k-means video</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR unsupervised-learning lectures</a></li>
 </ul>
-</article><article id="section-8" tabindex="-1" data-title="Outliers, context, and legitimate rare events"><h2>Outliers, context, and legitimate rare events</h2>
+</article><article id="section-7" tabindex="-1" data-title="Outliers, context, and legitimate rare events"><h2>Outliers, context, and legitimate rare events</h2>
 <p>Ask whether a flagged point is an error, an unusual but relevant case, a context-specific anomaly, or part of an unusual sequence. Exclusion needs a reason connected to the intended population and task. Compare the consequences of preserving and excluding the observation.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR linear-model diagnostics and unsupervised-learning lectures</a></li>
 </ul>
-</article><article id="section-9" tabindex="-1" data-title="CUSUM direction, allowance, and alarm threshold"><h2>CUSUM direction, allowance, and alarm threshold</h2>
+</article><article id="section-8" tabindex="-1" data-title="CUSUM direction, allowance, and alarm threshold"><h2>CUSUM direction, allowance, and alarm threshold</h2>
 <p>Trace Splus=max(0,Splus_previous+x-mu-C). C is an allowance subtracted from each increment; T is a separate alarm threshold. A lower monitor reverses the deviation. An alarm signals a change under the chosen baseline and settings; it does not establish a cause.</p>
 <ul>
 <li><a href="https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc323.htm">NIST CUSUM explanation</a></li>
 </ul>
-</article><article id="section-10" tabindex="-1" data-title="Single exponential smoothing and flat forecasts"><h2>Single exponential smoothing and flat forecasts</h2>
+</article><article id="section-9" tabindex="-1" data-title="Single exponential smoothing and flat forecasts"><h2>Single exponential smoothing and flat forecasts</h2>
 <p>Calculate a level update and expand two steps to see declining historical weights. Alpha governs the response to new data. Without trend or seasonality, future point forecasts all equal the latest level; do not keep updating with unknown future observations.</p>
 <ul>
 <li><a href="https://otexts.com/fpp3/ses.html">Forecasting textbook: single smoothing</a></li>
 </ul>
-</article><article id="section-11" tabindex="-1" data-title="Holt level, trend, and forecast horizon"><h2>Holt level, trend, and forecast horizon</h2>
+</article><article id="section-10" tabindex="-1" data-title="Holt level, trend, and forecast horizon"><h2>Holt level, trend, and forecast horizon</h2>
 <p>Keep level and trend as different quantities. Update level using the prior projected level and update trend using the level change. An h-step ordinary Holt forecast is level+h*trend. Trend units are response units per observation interval.</p>
 <ul>
 <li><a href="https://otexts.com/fpp3/holt.html">Forecasting textbook: trend smoothing</a></li>
 </ul>
-</article><article id="section-12" tabindex="-1" data-title="Holt-Winters seasonality and indexing"><h2>Holt-Winters seasonality and indexing</h2>
+</article><article id="section-11" tabindex="-1" data-title="Holt-Winters seasonality and indexing"><h2>Holt-Winters seasonality and indexing</h2>
 <p>Use the observation index to define the seasonal period: a manufacturing batch can supply the cycle even if its calendar duration varies. Multiplicative factors are ratios around one; additive effects are amounts around zero. Match the forecast to the correct future seasonal phase.</p>
 <ul>
 <li><a href="https://otexts.com/fpp3/holt-winters.html">Forecasting textbook: seasonal smoothing</a></li>
 </ul>
-</article><article id="section-13" tabindex="-1" data-title="ARIMA: AR lags, differencing, and MA innovations"><h2>ARIMA: AR lags, differencing, and MA innovations</h2>
+</article><article id="section-12" tabindex="-1" data-title="ARIMA: AR lags, differencing, and MA innovations"><h2>ARIMA: AR lags, differencing, and MA innovations</h2>
 <p>Read p,d,q in order. AR terms use previous values of the modeled series; d specifies differencing; MA terms use previous innovations. This MA component is different from averaging recent observed values. Check whether the differenced series has an adequately stable mean and dependence structure.</p>
 <ul>
 <li><a href="https://otexts.com/fpp3/non-seasonal-arima.html">Forecasting textbook: ARIMA</a></li>
 <li><a href="https://otexts.com/fpp3/stationarity.html">Forecasting textbook: stationarity and differencing</a></li>
 </ul>
-</article><article id="section-14" tabindex="-1" data-title="GARCH models variance, not the mean response"><h2>GARCH models variance, not the mean response</h2>
-<p>Separate the conditional mean from conditional variance. In a GARCH(1,1) update, both the previous squared shock and previous variance matter. Squaring removes shock direction. A variance forecast can stay large after a small shock when past variance is large.</p>
+</article><article id="section-13" tabindex="-1" data-title="Forecasting variability with GARCH"><h2>Forecasting variability with GARCH</h2>
+<p>Distinguish a value or mean forecast from a variance forecast. GARCH uses prior variance and squared errors to represent evolving volatility. Know its output and purpose; detailed fitting mathematics is outside this practice bank.</p>
 <ul>
 <li><a href="https://arch.readthedocs.io/en/latest/univariate/introduction.html">arch project: mean and volatility model components</a></li>
 </ul>
-</article><article id="section-15" tabindex="-1" data-title="Forecast validation without future information"><h2>Forecast validation without future information</h2>
+</article><article id="section-14" tabindex="-1" data-title="Forecast validation without future information"><h2>Forecast validation without future information</h2>
 <p>Use training windows that precede their forecast targets. Distinguish forecast errors from in-sample residuals. A rolling origin evaluates forecasts at repeated historical cutoffs, using only information available at each cutoff.</p>
 <ul>
 <li><a href="https://otexts.com/fpp3/tscv.html">Forecasting textbook: time-series validation</a></li>
 </ul>
-</article><article id="section-16" tabindex="-1" data-title="Linear regression, coefficient interpretation, and interactions"><h2>Linear regression, coefficient interpretation, and interactions</h2>
+</article><article id="section-15" tabindex="-1" data-title="Linear regression, coefficient interpretation, and interactions"><h2>Linear regression, coefficient interpretation, and interactions</h2>
 <p>Linear refers to coefficients, so powers and interactions of predictors can appear in a linear model. Hold other predictors fixed when interpreting an additive coefficient. With interactions, differentiate or compare complete predictions because the effect depends on the interacting predictor.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR linear-regression lectures</a></li>
 <li><a href="https://statquest.org/video_index.html">StatQuest video catalog: multiple regression</a></li>
 </ul>
-</article><article id="section-17" tabindex="-1" data-title="P-values, effect sizes, confidence, and prediction"><h2>P-values, effect sizes, confidence, and prediction</h2>
-<p>Interpret a p-value as a tail probability under the null model, not the probability the null is true. Distinguish statistical evidence from practical effect size and causality. A confidence interval for the mean response and a prediction interval for a new individual answer different questions.</p>
+</article><article id="section-16" tabindex="-1" data-title="Regression uncertainty, association, and practical value"><h2>Regression uncertainty, association, and practical value</h2>
+<p>Interpret coefficients conditional on the included predictors, with units and uncertainty. Significance does not establish causality or practical importance; an interval including zero does not prove no relationship.</p>
 <ul>
 <li><a href="https://youtu.be/vemZtEM63GY">StatQuest p-value video</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR regression-inference lectures</a></li>
 </ul>
-</article><article id="section-18" tabindex="-1" data-title="AIC, BIC, AICc, and likelihood"><h2>AIC, BIC, AICc, and likelihood</h2>
-<p>Use comparable responses, likelihood conventions, and parameter counts. Lower AIC/BIC is preferred. AIC=-2*logL+2*K; BIC=-2*logL+K*log(n). The AICc correction grows when n is small relative to K. A lower criterion does not certify causal interpretation or perfect prediction.</p>
+</article><article id="section-17" tabindex="-1" data-title="Likelihood and complexity criteria"><h2>Likelihood and complexity criteria</h2>
+<p>Likelihood describes fit under assumptions. AIC, corrected AIC, and BIC balance fit and complexity in different ways; lower comparable scores are preferred. A criterion does not guarantee the best operational decision.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR model-selection lectures</a></li>
 </ul>
-</article><article id="section-19" tabindex="-1" data-title="Residual plots and regression assumptions"><h2>Residual plots and regression assumptions</h2>
+</article><article id="section-18" tabindex="-1" data-title="Residual plots and regression assumptions"><h2>Residual plots and regression assumptions</h2>
 <p>Separate nonlinearity, unequal residual spread, dependence, and unusually influential observations. A curved pattern suggests a mean-model problem; changing spread suggests a variance problem. Assumptions concern errors conditional on predictors rather than requiring every predictor to be normally distributed.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR regression diagnostics lectures</a></li>
 </ul>
-</article><article id="section-20" tabindex="-1" data-title="PCA: scores, loadings, and outcome relevance"><h2>PCA: scores, loadings, and outcome relevance</h2>
-<p>Draw a rotated coordinate system. Scores are projections; loadings describe directions. Components maximize predictor variance subject to orthogonality, without consulting y. Retaining all components preserves the centered feature information; truncating them may discard predictive signal.</p>
+</article><article id="section-19" tabindex="-1" data-title="PCA purpose, components, and limitations"><h2>PCA purpose, components, and limitations</h2>
+<p>PCA summarizes predictor variation using new component directions without response labels. Correlated predictors can yield a dominant direction. Retaining much predictor variance does not guarantee response prediction or original-feature interpretability.</p>
 <ul>
 <li><a href="https://youtu.be/FgakZw6K1QQ">StatQuest PCA video</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR unsupervised-learning lectures</a></li>
 </ul>
-</article><article id="section-21" tabindex="-1" data-title="Box-Cox, detrending, and returning to original units"><h2>Box-Cox, detrending, and returning to original units</h2>
-<p>For positive y, use (y^lambda-1)/lambda, with log(y) as the zero-power limit. A transformation can help a model without guaranteeing all assumptions. Re-add a removed trend after predicting detrended values. Nonlinear inverse transformations need care when interpreting conditional means.</p>
+</article><article id="section-20" tabindex="-1" data-title="Transformations and response scale"><h2>Transformations and response scale</h2>
+<p>A transformation can improve model behavior but does not guarantee a correct specification. Distinguish predictor transformations, response transformations, and detrending. Report predictions and coefficients on the appropriate scale.</p>
 <ul>
 <li><a href="https://www.itl.nist.gov/div898/handbook/pmc/section5/pmc52.htm">NIST Box-Cox explanation</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR regression lectures</a></li>
 </ul>
-</article><article id="section-22" tabindex="-1" data-title="Logistic probabilities versus odds"><h2>Logistic probabilities versus odds</h2>
-<p>Convert eta to p=1/(1+exp(-eta)). Odds=p/(1-p); a one-unit predictor change multiplies odds by exp(beta) in an additive logistic model. It does not multiply probability by the same factor. A probability model and a classification threshold are separate choices.</p>
+</article><article id="section-21" tabindex="-1" data-title="Logistic probability and classification"><h2>Logistic probability and classification</h2>
+<p>Separate a fitted binary-event probability from the class or action produced by a threshold. The threshold can change without refitting probabilities, and its value depends on error consequences.</p>
 <ul>
 <li><a href="https://youtu.be/yIYKR4sgzI8">StatQuest logistic-regression video</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR classification lectures</a></li>
 </ul>
-</article><article id="section-23" tabindex="-1" data-title="Confusion metrics, prevalence, and ROC"><h2>Confusion metrics, prevalence, and ROC</h2>
+</article><article id="section-22" tabindex="-1" data-title="Confusion metrics, prevalence, and ROC"><h2>Confusion metrics, prevalence, and ROC</h2>
 <p>Define the positive event before writing TP,FP,FN,TN. Recall conditions on actual positives, precision on predicted positives, and specificity on actual negatives. ROC plots TPR versus FPR across thresholds. AUC measures ranking; it does not prescribe a threshold or guarantee probability calibration.</p>
 <ul>
 <li><a href="https://youtu.be/4jRBRDbJemM">StatQuest ROC video</a></li>
 <li><a href="https://statquest.org/video_index.html">StatQuest video catalog: confusion metrics</a></li>
 </ul>
-</article><article id="section-24" tabindex="-1" data-title="Decision costs and the probability threshold"><h2>Decision costs and the probability threshold</h2>
-<p>Compare expected losses for the two actions. With calibrated probability p, false-positive cost a and false-negative cost b, classify positive when a*(1-p)&lt;b*p, equivalently p&gt;a/(a+b). This relies on correct decisions having zero cost; more general costs change the calculation.</p>
+</article><article id="section-23" tabindex="-1" data-title="Decision consequences and expected cost"><h2>Decision consequences and expected cost</h2>
+<p>Define the positive outcome, count the two error types, and weight them by their consequences. For one probability-based decision, compare the expected cost of the two actions. Do not assume 50% is universally the right threshold.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR classification and decision-rule lectures</a></li>
 </ul>
-</article><article id="section-25" tabindex="-1" data-title="Random forests, bootstrap samples, and feature subsampling"><h2>Random forests, bootstrap samples, and feature subsampling</h2>
-<p>Separate sampling observations with replacement from randomly limiting candidate features at each split. The second step reduces similarity among trees. Classification uses aggregated votes or probabilities; regression averages numerical predictions. Importance describes predictive usefulness, not causal direction.</p>
+</article><article id="section-24" tabindex="-1" data-title="Random forests and diverse trees"><h2>Random forests and diverse trees</h2>
+<p>Know how randomized predictor choices can diversify supervised trees and why combining different strengths may help. Averaging or voting does not repair leakage or prove causality. Bootstrap/OOB calculations are not required for this bank.</p>
 <ul>
 <li><a href="https://youtu.be/J4Wdy0Wc_xQ">StatQuest random-forest video</a></li>
 <li><a href="https://www.statlearning.com/online-courses">ISLR tree-model lectures</a></li>
 </ul>
-</article><article id="section-26" tabindex="-1" data-title="Trees, leaf predictions, impurity, and pruning"><h2>Trees, leaf predictions, impurity, and pruning</h2>
-<p>Follow split rules in sequence. Ordinary squared-error regression CART predicts a leaf mean; a model tree can fit a regression inside a leaf. Classification impurity and regression SSE are different criteria. More leaves can improve training fit while hurting held-out performance.</p>
+</article><article id="section-25" tabindex="-1" data-title="Trees, predictions, branching, and pruning"><h2>Trees, predictions, branching, and pruning</h2>
+<p>Follow the feature tests to the reached leaf. A constant regression leaf predicts its mean, while a classification leaf uses its most common class. Check leaf support, training versus validation improvement, and pruning; impurity derivations are not required.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR tree-model lectures</a></li>
 <li><a href="https://statquest.org/video_index.html">StatQuest video catalog: classification and regression trees</a></li>
 </ul>
-</article><article id="section-27" tabindex="-1" data-title="Introduced regression families"><h2>Introduced regression families</h2>
-<p>Know the lecture-level distinctions: Poisson for count means, Bayesian updating of a parameter distribution, splines as joined polynomial pieces, and neighbor regression as local averaging. Use companion lectures to clarify a distinction rather than treating every advanced implementation detail as required scope.</p>
+</article><article id="section-26" tabindex="-1" data-title="Survey of introduced regression families"><h2>Survey of introduced regression families</h2>
+<p>Distinguish Poisson count-rate modeling, smoothly joined spline pieces, Bayesian updating using prior information, and neighbor regression averaging. No advanced fitting algorithms or distributional derivations are required.</p>
 <ul>
 <li><a href="https://www.statlearning.com/online-courses">ISLR regression, nonlinear-model, and Bayesian companion lectures</a></li>
-</ul></article><article id="section-28" tabindex="-1" data-title="How the sample quiz shapes interactive practice"><h1>How the sample quiz shapes interactive practice</h1>
+</ul></article><article id="section-27" tabindex="-1" data-title="How the sample quiz shapes interactive practice"><h1>How the sample quiz shapes interactive practice</h1>
 <p>The supplied sample is a style guide, not a complete coverage or weighting blueprint. Its questions demonstrate the following reasoning patterns. References identify topics rather than pages or lines.</p>
 <div class="table-wrap"><table><thead><tr><th>Pattern</th><th>What the sample requires</th><th>How to practice</th></tr></thead><tbody>
 <tr><td>Interpret a fitted rule visually</td><td>Identify which coordinate actually determines a classifier&#x27;s decision</td><td>Read axes and boundary direction before judging importance. The app includes original vertical/horizontal classifier diagrams.</td></tr>
@@ -161,27 +158,26 @@
 </tbody></table></div>
 <p>The app retains the 280 recall and 250 applied cards and adds 24 original scenario cards targeting these patterns. It includes six kinds of original SVG diagrams: vertical and horizontal decision boundaries, a tree, an elbow curve, correlated predictors, and shift-specific event clusters. The supplied quiz&#x27;s images and question wording are not embedded in the app.</p>
 <p>The applied deck still covers all Modules 1–10. The sample contains fewer topics and should not narrow preparation to just the scenarios it happens to show. Existing printed question files and separate answer keys remain intact.</p>
-<p>In the interactive viewer, read the question and any choices or diagram, form your answer, then use Reveal answer to compare. Previous and Next navigate the cards. Auto-play displays the question and answer for equal 5-, 10-, or 15-second intervals before advancing. The user requested this simple viewer in place of the earlier quiz-mode design; the app does not grade or score responses. Printed quiz files and their separate explanatory keys remain available for formal practice.</p></article><article id="section-29" tabindex="-1" data-title="Coverage and validation record"><h1>Coverage and validation record</h1>
-<p>All 54 transcripts were read in the preceding review. This pack uses their Modules 1–10 content, the supplied sample quiz, and selected relevant ISLR second-edition discussions. References identify sources/topics without page or line citations.</p>
-<div class="table-wrap"><table><thead><tr><th>Module</th><th>Quiz questions</th><th>Recall cards</th><th>Applied cards</th><th>Total module cards</th></tr></thead><tbody>
-<tr><td>1</td><td>11</td><td>12</td><td>11</td><td>23</td></tr>
-<tr><td>2</td><td>37</td><td>38</td><td>37</td><td>75</td></tr>
-<tr><td>3</td><td>24</td><td>24</td><td>24</td><td>48</td></tr>
-<tr><td>4</td><td>26</td><td>25</td><td>26</td><td>51</td></tr>
-<tr><td>5</td><td>12</td><td>15</td><td>12</td><td>27</td></tr>
-<tr><td>6</td><td>17</td><td>15</td><td>17</td><td>32</td></tr>
-<tr><td>7</td><td>42</td><td>43</td><td>42</td><td>85</td></tr>
-<tr><td>8</td><td>27</td><td>33</td><td>27</td><td>60</td></tr>
-<tr><td>9</td><td>19</td><td>24</td><td>19</td><td>43</td></tr>
-<tr><td>10</td><td>35</td><td>51</td><td>35</td><td>86</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>250</strong></td><td><strong>280</strong></td><td><strong>250</strong></td><td><strong>530</strong></td></tr>
+<p>In the interactive viewer, read the question and any choices or diagram, form your answer, then use Reveal answer to compare. Previous and Next navigate the cards. Auto-play displays the question and answer for equal 5-, 10-, or 15-second intervals before advancing. The user requested this simple viewer in place of the earlier quiz-mode design; the app does not grade or score responses. Printed quiz files and their separate explanatory keys remain available for formal practice.</p></article><article id="section-28" tabindex="-1" data-title="Coverage and assessment revision"><h1>Coverage and assessment revision</h1>
+<p>The supplied sample quiz guides reasoning style, not an official prediction of exam weighting. Modules 1–10 remain the complete scope. All 250 original IDs are retained; 136 items were revised toward comprehensive scenario reasoning and lecture-level interpretation. There are five 50-question quizzes, each with 45 multiple-choice questions, three blanks, and two true/false questions.</p>
+<div class="table-wrap"><table><thead><tr><th>Module</th><th>Questions</th><th>Recall cards</th><th>Applied cards</th></tr></thead><tbody>
+<tr><td>1</td><td>11</td><td>12</td><td>11</td></tr>
+<tr><td>2</td><td>37</td><td>38</td><td>37</td></tr>
+<tr><td>3</td><td>24</td><td>24</td><td>24</td></tr>
+<tr><td>4</td><td>26</td><td>25</td><td>26</td></tr>
+<tr><td>5</td><td>12</td><td>15</td><td>12</td></tr>
+<tr><td>6</td><td>17</td><td>15</td><td>17</td></tr>
+<tr><td>7</td><td>42</td><td>43</td><td>42</td></tr>
+<tr><td>8</td><td>27</td><td>33</td><td>27</td></tr>
+<tr><td>9</td><td>19</td><td>24</td><td>19</td></tr>
+<tr><td>10</td><td>35</td><td>51</td><td>35</td></tr>
 </tbody></table></div>
-<p>Each quiz has 45 multiple-choice questions, three fill-in-the-blank questions, and two true/false questions. Question stems are unique across the five quizzes. Each multi-select is labeled and its complete answer set is provided. Choices were reordered reproducibly, and correct letters remapped to their new positions.</p>
-<div class="table-wrap"><table><thead><tr><th>Quiz</th><th>Single-select</th><th>Multi-select</th><th>Fill-in</th><th>True/false</th></tr></thead><tbody>
-<tr><td>1</td><td>28</td><td>17</td><td>3</td><td>2</td></tr>
-<tr><td>2</td><td>28</td><td>17</td><td>3</td><td>2</td></tr>
-<tr><td>3</td><td>27</td><td>18</td><td>3</td><td>2</td></tr>
-<tr><td>4</td><td>26</td><td>19</td><td>3</td><td>2</td></tr>
-<tr><td>5</td><td>25</td><td>20</td><td>3</td><td>2</td></tr>
+<div class="table-wrap"><table><thead><tr><th>Quiz</th><th>Single-select</th><th>Multi-select</th><th>Blank</th><th>True/false</th></tr></thead><tbody>
+<tr><td>1</td><td>18</td><td>27</td><td>3</td><td>2</td></tr>
+<tr><td>2</td><td>18</td><td>27</td><td>3</td><td>2</td></tr>
+<tr><td>3</td><td>16</td><td>29</td><td>3</td><td>2</td></tr>
+<tr><td>4</td><td>15</td><td>30</td><td>3</td><td>2</td></tr>
+<tr><td>5</td><td>11</td><td>34</td><td>3</td><td>2</td></tr>
 </tbody></table></div>
-<p>Validation checks: 250 unique stems; valid answer letters; one answer for single-select; at least two for multi-select; four unique choices per multiple-choice question; 530 unique flashcard fronts; exactly two TSV fields and one record per line; topic coverage for every module; representative numerical solutions checked independently. These checks validate the pack structure and selected calculations, not equivalence to an official exam.</p></article></div><footer>Original practice material for studying. Quiz scores use a study convention, not official exam scoring.</footer></main><script src="../shared/reader.js"></script></body></html>
+<p>Scope limits: no optimization derivations, impurity/entropy calculations, OOB/bootstrap theory, formal PCA rank proofs, or logistic-odds derivations are required. Advanced regression families are assessed only by purpose, data, and basic mechanism.</p>
+<p>Validation checks cover uniqueness, option/key alignment, question-only files, source scope, regenerated keys/decks, and app scoring. Medium/hard is an editorial target, not a difficulty rating calibrated on actual test takers.</p></article></div><footer>Original practice material for studying. Quiz scores use a study convention, not official exam scoring.</footer></main><script src="../shared/reader.js"></script></body></html>

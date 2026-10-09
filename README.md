@@ -28,7 +28,7 @@ Exams/Midterm - 1/apps/
 
 Open the root `index.html` locally, or serve the repository with `python3 -m http.server 8000 --bind 127.0.0.1`. No packages, backend, or account are required. External reading/video links require internet. The guide and resources remain readable with JavaScript disabled.
 
-Quizzes save drafts per quiz when browser storage is available. Submit before reviewing explanations; blanks are self-checked for equivalent wording/formulas. **Print questions** prints the question view without the answer review or your responses. Flashcards retain Reveal, Previous, Next, and Auto-play at 5/10/15 seconds.
+Quizzes save drafts per quiz when browser storage is available. Submit before reviewing explanations; blanks are self-checked for equivalent wording/formulas. **Print questions** prints the question view without the answer review or your responses. Flashcards retain Reveal, Previous, Next, and Auto-play at 5/10/15 seconds. Reveal displays brief answers, with optional explanations and readings in a collapsed section. The five 50-question quizzes retain 90% multiple-choice and 10% blanks/true-false, with scenario reasoning and multi-model comparisons within Modules 1–10.
 
 Git contains only this documentation, root Pages/configuration files, and the `apps` tree. The separate `cheat-sheet`, source `materials`, authoring tools, supplied PDFs, course transcripts, and browser environments stay local in the course workspace. There are no duplicate guide/resource payloads or printable quiz copies in the published tree.
 

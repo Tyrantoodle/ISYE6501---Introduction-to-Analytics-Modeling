@@ -22,13 +22,13 @@
   }
   function readDraft() {
     if (drafts[quiz]) return core.draft(data[quiz], drafts[quiz]);
-    try {return core.draft(data[quiz], JSON.parse(localStorage.getItem('isye6501-mt1-quiz-v1-' + quiz)));}
+    try {return core.draft(data[quiz], JSON.parse(localStorage.getItem('isye6501-mt1-quiz-v2-' + quiz)));}
     catch (_) {return core.draft(data[quiz], null);}
   }
   function save() {
     drafts[quiz] = core.draft(data[quiz], answers);
     try {
-      localStorage.setItem('isye6501-mt1-quiz-v1-' + quiz, JSON.stringify(answers));
+      localStorage.setItem('isye6501-mt1-quiz-v2-' + quiz, JSON.stringify(answers));
       el('save-status').textContent = 'Draft saved in this browser.';
     } catch (_) {el('save-status').textContent = 'Browser storage is unavailable. Your draft stays here until this page closes.';}
     const count = data[quiz].filter(q => core.answered(q, answers[q.id])).length;
@@ -102,7 +102,7 @@
   function reset() {
     if (busy || !window.confirm('Clear this quiz’s responses and start a new attempt?')) return;
     drafts[quiz] = core.draft(data[quiz], null);
-    try {localStorage.removeItem('isye6501-mt1-quiz-v1-' + quiz);} catch (_) {}
+    try {localStorage.removeItem('isye6501-mt1-quiz-v2-' + quiz);} catch (_) {}
     render(); el('quiz-form').scrollIntoView({block:'start'});
   }
   try {
