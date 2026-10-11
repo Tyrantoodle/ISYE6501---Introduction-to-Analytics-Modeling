@@ -106,7 +106,7 @@
     render(); el('quiz-form').scrollIntoView({block:'start'});
   }
   try {
-    if (!core || !Array.isArray(data) || data.length !== 5 || data.some(q => q.length !== 50)) throw new Error('Missing questions');
+    if (!core || !Array.isArray(data) || data.length !== 10 || data.some(q => q.length !== 50)) throw new Error('Missing questions');
     render();
     el('print-questions').addEventListener('click', () => window.print());
     el('quiz').addEventListener('change', () => {if (busy) return; quiz = Number(el('quiz').value); render();});
