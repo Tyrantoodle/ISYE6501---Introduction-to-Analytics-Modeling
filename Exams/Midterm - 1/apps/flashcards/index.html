@@ -14,7 +14,7 @@
 <div class="card-heading"><span id="position">Loading cards…</span><span id="module"></span></div>
 <article class="flashcard" aria-label="Flashcard">
 <section aria-labelledby="question"><p class="label">QUESTION</p><h2 id="question">Loading…</h2><div id="diagram"></div><ul id="choices" hidden></ul></section>
-<section id="answer-panel" aria-labelledby="answer-label" hidden><p id="answer-label" class="label">ANSWER</p><p id="answer"></p><details id="answer-details"><summary>Explanation and readings</summary><p id="explanation"></p><p id="takeaway"></p><div id="links"></div></details></section>
+<section id="answer-panel" aria-labelledby="answer-label" hidden><p id="answer-label" class="label">ANSWER</p><p id="answer"></p><button id="more-explanation" type="button" aria-expanded="false" aria-controls="answer-details">More explanation</button><section id="answer-details" aria-labelledby="explanation-heading" hidden><h3 id="explanation-heading">Detailed explanation</h3><p id="explanation"></p><p id="takeaway"></p><h3 id="references-heading">References</h3><div id="links"></div></section></section>
 </article>
 <nav class="controls" aria-label="Flashcard controls">
 <button id="previous" type="button">← Previous</button>
@@ -22,7 +22,7 @@
 <button id="next" type="button">Next →</button>
 </nav>
 <div class="autoplay-controls"><button id="shuffle" type="button">Shuffle / new round</button><button id="autoplay" type="button" aria-pressed="false">▶ Auto-play</button><label for="interval">Interval</label><select id="interval"><option value="5">5 seconds</option><option value="10" selected>10 seconds</option><option value="15">15 seconds</option></select><span id="play-status" role="status" aria-live="polite">Paused</span></div>
-<p class="help">Auto-play shows the question, then the answer, each for the selected interval. It pauses when you use Previous, Next, Reveal, or Shuffle.</p>
+<p class="help">Auto-play shows the question, then the answer, each for the selected interval. It pauses when you use Previous, Next, Reveal, Shuffle, or More explanation.</p>
 <p class="help">Shuffle starts a fresh order with every card once. Next and Auto-play do not repeat cards within a round; Previous reviews earlier cards. Your order and position are saved in this browser.</p>
 <p class="shortcuts">Keyboard: ← previous · → next · Space reveal · P play/pause</p>
 </main>

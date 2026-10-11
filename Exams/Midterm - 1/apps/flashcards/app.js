@@ -43,14 +43,54 @@ clusters:`<path d="M50 25V205H380"/><text x="130" y="234">Circles: day · Square
 const diagramText={vertical:'The horizontal axis is x₁ and the vertical axis is x₂. A vertical dashed boundary is at x₁=4. The region to its left is negative; the region to its right is positive.',horizontal:'The horizontal axis is x₁ and the vertical axis is x₂. A horizontal dashed boundary separates positive above from negative below.',tree:'First test x₁ < 4: YES goes to the left negative leaf, with 17 of 20 correct. NO goes to x₂ > 2: YES goes to the middle positive leaf, with 18 of 20 correct; NO goes to the right negative leaf, with 1 of 1 correct.',elbow:'For cluster counts k=1,2,3,4,5, WSS is respectively 420,230,120,108,101. Both axes increase in their labeled direction.',pca:'A scatter plot of two standardized predictors has points clustered close to a rising diagonal line.',clusters:'Daytime circles are concentrated in the upper-left region, and nighttime squares in the lower-right region.'};
 
 function drawDiagram(card){$('diagram').replaceChildren();if(!card.diagram||!svgs[card.diagram])return;const content=document.createElement('div');content.innerHTML=`<svg viewBox="0 0 440 260" role="img" aria-label="${diagramText[card.diagram]}">${svgs[card.diagram]}</svg>`;const details=document.createElement('details');details.append(text('summary','Read diagram as text'),text('p',diagramText[card.diagram]));$('diagram').append(content,details);}
-function render(){const card=cards[index];$('position').textContent=`Card ${index+1} of ${cards.length}${shuffled?' · Shuffled':''}`;$('module').textContent=`Module ${card.module} · ${card.topic}`;$('question').textContent=card.stem;$('choices').replaceChildren();const options=card.options||[];options.forEach((option,i)=>$('choices').append(text('li',String.fromCharCode(65+i)+'. '+option)));$('choices').hidden=!options.length;drawDiagram(card);$('answer').textContent=card.answer;$('explanation').textContent=card.explanation===card.answer?'':card.explanation;$('explanation').hidden=!$('explanation').textContent;$('takeaway').textContent=card.takeaway?'Remember: '+card.takeaway:'';$('takeaway').hidden=!card.takeaway;$('links').replaceChildren();for(const [i,link]of(card.links||[]).entries()){if(i)$('links').append(document.createTextNode(' · '));const a=text('a',link.label);a.href=link.url;a.target='_blank';a.rel='noopener noreferrer';$('links').append(a);}$('links').hidden=!(card.links||[]).length;$('answer-details').hidden=!($('explanation').textContent||card.takeaway||(card.links||[]).length);$('answer-details').open=false;$('answer-panel').hidden=!revealed;$('reveal').textContent=revealed?'Hide answer':'Reveal answer';$('reveal').setAttribute('aria-expanded',String(revealed));$('previous').disabled=index===0;$('next').disabled=index===cards.length-1;persist();}
+function closeExplanation(){
+ $('answer-details').hidden=true;
+ $('more-explanation').textContent='More explanation';
+ $('more-explanation').setAttribute('aria-expanded','false');
+}
+function render(){
+ const card=cards[index];
+ $('position').textContent=`Card ${index+1} of ${cards.length}${shuffled?' · Shuffled':''}`;
+ $('module').textContent=`Module ${card.module} · ${card.topic}`;
+ $('question').textContent=card.stem;
+ $('choices').replaceChildren();
+ const options=card.options||[];
+ options.forEach((option,i)=>$('choices').append(text('li',String.fromCharCode(65+i)+'. '+option)));
+ $('choices').hidden=!options.length;drawDiagram(card);
+ $('answer').textContent=card.answer;
+ $('explanation').textContent=card.explanation;
+ $('takeaway').textContent=card.takeaway?'Remember: '+card.takeaway:'';
+ $('takeaway').hidden=!card.takeaway;
+ $('links').replaceChildren();
+ for(const [i,link]of(card.links||[]).entries()){
+  if(i)$('links').append(document.createTextNode(' · '));
+  const a=text('a',link.label);a.href=link.url;a.target='_blank';a.rel='noopener noreferrer';$('links').append(a);
+ }
+ $('links').hidden=!(card.links||[]).length;
+ $('references-heading').hidden=!(card.links||[]).length;
+ closeExplanation();
+ $('answer-panel').hidden=!revealed;
+ $('reveal').textContent=revealed?'Hide answer':'Reveal answer';
+ $('reveal').setAttribute('aria-expanded',String(revealed));
+ $('previous').disabled=index===0;$('next').disabled=index===cards.length-1;
+ persist();
+}
+function toggleExplanation(){
+ if(!revealed)return;
+ pause();
+ const opening=$('answer-details').hidden;
+ $('answer-details').hidden=!opening;
+ $('more-explanation').textContent=opening?'Less explanation':'More explanation';
+ $('more-explanation').setAttribute('aria-expanded',String(opening));
+}
 function updateStatus(){ $('autoplay').textContent=playing?'⏸ Pause':'▶ Auto-play';$('autoplay').setAttribute('aria-pressed',String(playing));$('play-status').textContent=playing?`${revealed?'Answer':'Question'} · ${$('interval').value}s`:index===cards.length-1&&revealed?'End of deck':'Paused';}
 function pause(){playing=false;if(timer!==null){clearTimeout(timer);timer=null;}updateStatus();}
 function schedule(){if(timer!==null)clearTimeout(timer);if(!playing)return;const delay=Number($('interval').value)*1000;timer=setTimeout(()=>{timer=null;if(!playing)return;if(!revealed)revealed=true;else if(index<cards.length-1){index++;revealed=false;}else{pause();return;}render();updateStatus();schedule();},delay);}
 function move(delta){pause();const next=index+delta;if(next<0||next>=cards.length)return;index=next;revealed=false;render();updateStatus();}
 function toggleAnswer(){pause();revealed=!revealed;render();updateStatus();}
-function togglePlay(){if(playing){pause();return;}playing=true;updateStatus();schedule();}
+function togglePlay(){if(playing){pause();return;}closeExplanation();playing=true;updateStatus();schedule();}
 $('shuffle').onclick=shuffleDeck;
+$('more-explanation').onclick=toggleExplanation;
 $('previous').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('reveal').onclick=toggleAnswer;$('autoplay').onclick=togglePlay;$('interval').onchange=()=>{persist();if(playing)schedule();updateStatus();};
 document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea,select,button,a,summary')||e.altKey||e.ctrlKey||e.metaKey||e.repeat)return;if(e.key==='ArrowLeft'){e.preventDefault();move(-1);}else if(e.key==='ArrowRight'){e.preventDefault();move(1);}else if(e.code==='Space'){e.preventDefault();toggleAnswer();}else if(e.key.toLowerCase()==='p'){e.preventDefault();togglePlay();}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});

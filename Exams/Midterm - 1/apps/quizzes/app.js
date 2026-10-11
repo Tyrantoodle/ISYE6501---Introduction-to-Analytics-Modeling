@@ -40,7 +40,7 @@
     el('questions').replaceChildren();
     data[quiz].forEach((q, index) => {
       const field = document.createElement('fieldset');
-      const legend = document.createElement('legend'); legend.textContent = (index + 1) + '. ' + q.topic + ' · ' + ({multi:'Select all that apply',single:'Select one',tf:'True or false',blank:'Fill in the blank'}[q.type]);
+      const legend = document.createElement('legend'); legend.textContent = (index + 1) + '. ' + ({multi:'Select all that apply',single:'Select one',tf:'True or false',blank:'Fill in the blank'}[q.type]);
       field.appendChild(legend);
       const stem = document.createElement('p'); stem.textContent = q.stem; field.appendChild(stem);
       if (q.type === 'blank') {
